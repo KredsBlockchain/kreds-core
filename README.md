@@ -51,7 +51,7 @@ For further information about Segregated Witness please visit [bitcoincore.org](
 #### InstantTX and DarkSend Removal 
 *(Reproduced here for information purposes only, not release related)*
 
-Dropped support for both InstantTX and DarkSend. With the SegWit upgrade these features are going to be superseeded by far superior technology. SegWit will enable the ORIZON to adopt the [Lightning Network](https://lightning.network/lightning-network-paper.pdf), cross-chain atomic swaps, advanced versions of [TumbleBit](https://eprint.iacr.org/2016/575.pdf) and more.
+Dropped support for both InstantTX and DarkSend. With the SegWit upgrade these features are going to be superseeded by far superior technology. SegWit will enable the Kreds to adopt the [Lightning Network](https://lightning.network/lightning-network-paper.pdf), cross-chain atomic swaps, advanced versions of [TumbleBit](https://eprint.iacr.org/2016/575.pdf) and more.
 
 
 #### Hierarchical Deterministic Key Generation 
@@ -123,7 +123,7 @@ __________________________________________________________________________
 ### Development Process
 
 The `master` branch is meant to be stable. Development is normally done in separate branches.
-[Tags](https://github.com/kreds/kreds/tags) are created to indicate new official,
+[Tags](https://github.com/KredsBlockchain/kreds-core/tags) are created to indicate new official,
 stable release versions of Kreds' Core.
 
 The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
@@ -145,7 +145,7 @@ Use the autogen script to prepare the build environment.
 **precompiled binaries**
 
 Precompiled binaries are available at GitHub, see
-https://github.com/kreds/kreds/releases
+https://github.com/KredsBlockchain/kreds-core/releases
 
 Always verify the signatures and checksums.
 
