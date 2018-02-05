@@ -1,4 +1,4 @@
-![Alt text](doc/kreds.png)
+![Alt text](doc/logo.png)
 
 
 
