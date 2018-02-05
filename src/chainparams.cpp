@@ -110,7 +110,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nOverrideRuleChangeActivationThreshold = 1; 
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0000000000000000000000000000000000000000000000000000000000100001");
+        consensus.nMinimumChainWork = uint256S("0000000000000000000000000000000000000000000000000000000000200002");
 
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x0");
@@ -153,10 +153,10 @@ public:
         fMineBlocksOnDemand = false;
 
         checkpointData = (CCheckpointData) {
-            boost::assign::map_list_of
-			(  0, uint256S("000008baa6bf22823edd713cfe256dc734b443a2a8bbd5a2e9688bb03a33c19a"))
-	        
-            
+            {
+                {     0, uint256S("000008baa6bf22823edd713cfe256dc734b443a2a8bbd5a2e9688bb03a33c19a")},
+                {     1, uint256S("0000023a1430f3c7031fe81e58ba04230dcd7af93f5f3b9341063793f63c5e48")}
+            }
         };
 
         // [1] UNIX timestamp of last known number of transactions
@@ -165,8 +165,8 @@ public:
         // [3] estimated number of transactions per second after that timestamp
 
         chainTxData = ChainTxData{
-            1517851800,
-            1,
+            1517851850,
+            2,
             10
         };
     }
