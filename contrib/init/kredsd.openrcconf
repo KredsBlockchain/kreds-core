@@ -1,0 +1,33 @@
+# /etc/conf.d/kredsd: config file for /etc/init.d/kredsd
+
+# Config file location
+#KREDSD_CONFIGFILE="/etc/kreds/kreds.conf"
+
+# What directory to write pidfile to?  (created and owned by $KREDSD_USER)
+#KREDSD_PIDDIR="/var/run/kredsd"
+
+# What filename to give the pidfile
+#KREDSD_PIDFILE="${KREDSD_PIDDIR}/kredsd.pid"
+
+# Where to write kredsd data (be mindful that the blockchain is large)
+#KREDSD_DATADIR="/var/lib/kredsd"
+
+# User and group to own kredsd process
+#KREDSD_USER="kreds"
+#KREDSD_GROUP="kreds"
+
+# Path to kredsd executable
+#KREDSD_BIN="/usr/bin/kredsd"
+
+# Nice value to run kredsd under
+#KREDSD_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+KREDSD_OPTS="-disablewallet"
+
+# The timeout in seconds OpenRC will wait for kredsd to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+KREDSD_SIGTERM_TIMEOUT=60

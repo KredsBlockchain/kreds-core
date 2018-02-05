@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Kreds
+Comment=Kreds P2P Cryptocurrency
+Exec=kreds-qt %u
+Terminal=false
+Type=Application
+Icon=kreds128
+MimeType=x-scheme-handler/kreds;
+Categories=Office;Finance;
+Name[en_US]=kreds-qt.desktop

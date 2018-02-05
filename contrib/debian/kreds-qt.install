@@ -1,0 +1,6 @@
+usr/local/bin/kreds-qt usr/bin
+share/pixmaps/kreds32.xpm usr/share/pixmaps
+share/pixmaps/kreds16.xpm usr/share/pixmaps
+share/pixmaps/kreds128.png usr/share/pixmaps
+debian/kreds-qt.desktop usr/share/applications
+debian/kreds-qt.protocol usr/share/kde4/services/

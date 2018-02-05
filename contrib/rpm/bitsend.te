@@ -1,0 +1,81 @@
+policy_module(kreds, 1.100.1)
+
+########################################
+#
+# Declarations
+#
+
+type kreds_t;
+type kreds_exec_t;
+init_daemon_domain(kreds_t, kreds_exec_t)
+
+permissive kreds_t;
+
+type kreds_initrc_exec_t;
+init_script_file(kreds_initrc_exec_t)
+
+type kreds_conf_t;
+files_type(kreds_conf_t)
+
+type kreds_var_lib_t;
+files_type(kreds_var_lib_t)
+
+type kreds_var_run_t;
+files_type(kreds_var_run_t)
+
+type kreds_port_t;
+corenet_port(kreds_port_t)
+
+########################################
+#
+# kreds local policy
+#
+allow kreds_t self:process { fork };
+
+allow kreds_t self:fifo_file rw_fifo_file_perms;
+allow kreds_t self:unix_stream_socket create_stream_socket_perms;
+
+manage_dirs_pattern(kreds_t, kreds_conf_t, kreds_conf_t)
+manage_files_pattern(kreds_t, kreds_conf_t, kreds_conf_t)
+
+manage_dirs_pattern(kreds_t, kreds_var_lib_t, kreds_var_lib_t)
+manage_files_pattern(kreds_t, kreds_var_lib_t, kreds_var_lib_t)
+files_var_lib_filetrans(kreds_t, kreds_var_lib_t, { dir file })
+
+manage_dirs_pattern(kreds_t, kreds_var_run_t, kreds_var_run_t)
+manage_files_pattern(kreds_t, kreds_var_run_t, kreds_var_run_t)
+
+sysnet_dns_name_resolve(kreds_t)
+corenet_all_recvfrom_unlabeled(kreds_t)
+
+allow kreds_t self:tcp_socket create_stream_socket_perms;
+corenet_tcp_sendrecv_generic_if(kreds_t)
+corenet_tcp_sendrecv_generic_node(kreds_t)
+corenet_tcp_sendrecv_all_ports(kreds_t)
+corenet_tcp_bind_generic_node(kreds_t)
+
+gen_require(`
+    type kreds_port_t;
+')
+allow kreds_t kreds_port_t:tcp_socket name_bind;
+
+gen_require(`
+    type kreds_port_t;
+')
+allow kreds_t kreds_port_t:tcp_socket name_connect;
+
+domain_use_interactive_fds(kreds_t)
+
+files_read_etc_files(kreds_t)
+
+miscfiles_read_localization(kreds_t)
+
+sysnet_dns_name_resolve(kreds_t)
+
+allow kreds_t kreds_exec_t:file execute_no_trans;
+allow kreds_t self:process setsched;
+corecmd_exec_ls(kreds_t)
+corenet_tcp_connect_http_port(kreds_t)
+dev_read_urand(kreds_t)
+fs_getattr_xattr_fs(kreds_t)
+kernel_read_system_state(kreds_t)
