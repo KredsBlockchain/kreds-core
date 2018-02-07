@@ -590,7 +590,7 @@ std::string HelpMessage(HelpMessageMode mode)
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/KredsBlockchain/kreds>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/KredsBlockchain/kreds-core>";
     const std::string URL_WEBSITE = "<https://kredsblockchain.com>";
 
 	//TODO-- add kreds license
