@@ -30,14 +30,6 @@ apt-get update
 
 apt-get install libdb4.8-dev libdb4.8++-dev
 
-curl https://raw.githubusercontent.com/creationix/nvm/v0.16.1/install.sh | sh
-
-source ~/.profile
-
-nvm install 0.10.25
-
-nvm use 0.10.25
-
 
 Install Kreds:
 ----------------
