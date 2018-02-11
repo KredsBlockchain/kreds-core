@@ -24,7 +24,7 @@ apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl
 
 apt-get install libboost-all-dev git npm nodejs nodejs-legacy libminiupnpc-dev redis-server
 
-add-apt-repository ppa:kreds/kreds
+add-apt-repository ppa:bitcoin/bitcoin
 
 apt-get update
 
@@ -43,7 +43,7 @@ Install Kreds:
 ----------------
 cd
 
-git clone https://github.com/LIMXTEC/Kreds.git
+git clone https://github.com/KredsBlockchain/Kreds.git
 
 cd Kreds
 
