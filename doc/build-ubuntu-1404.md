@@ -22,7 +22,7 @@ Install Addons :
 ----------------
 apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev
 
-apt-get install libboost-all-dev git npm nodejs nodejs-legacy libminiupnpc-dev redis-server
+apt-get install libboost-all-dev git npm nodejs nodejs-legacy libminiupnpc-dev redis-server libevent-dev
 
 add-apt-repository ppa:bitcoin/bitcoin
 
@@ -56,7 +56,7 @@ Edit Config :
 
 rpcuser=USERNAME
 
-rpcpassword= PASS
+rpcpassword=PASS
 
 rpcallowip=127.0.0.1
 
@@ -65,10 +65,6 @@ rpcport=3950
 daemon=1
 
 server=1
-
-gen=0
-
-staking=0
 
 
 cd Kreds/src/
