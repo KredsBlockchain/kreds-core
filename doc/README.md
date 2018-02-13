@@ -1,4 +1,4 @@
-Kreds 1.2.7.0
+Kreds 1.0.0.0
 ====================
 
 Copyright (c) 2009-2017 Kreds Developers
@@ -8,7 +8,7 @@ Copyright (c) 2014-2017 Kreds Developers
 
 Setup
 ---------------------
-[Kreds](https://github.com/LIMXTEC/Kreds/releases) is the original Kreds client and it builds the backbone of the network. However, it downloads and stores the entire history of Kreds transactions (which is currently several GBs); depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more. Thankfully you only have to do this once. If you would like the process to go faster you can [download the blockchain directly](bootstrap.md).
+[Kreds](https://github.com/KredsBlockchain/kreds-core/releases) is the original Kreds client and it builds the backbone of the network. However, it downloads and stores the entire history of Kreds transactions (which is currently several GBs); depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more. Thankfully you only have to do this once. If you would like the process to go faster you can [download the blockchain directly](bootstrap.md).
 
 Running
 ---------------------
