@@ -35,19 +35,19 @@ Install Kreds:
 ----------------
 cd
 
-git clone https://github.com/KredsBlockchain/Kreds.git
+git clone https://github.com/KredsBlockchain/kreds-core.git
 
-cd Kreds
-
-
-sudo ./autogen.sh
-
-sudo ./configure
-
-sudo make
+cd kreds-core/
 
 
-cd /home/YOUR USERNAME/.kreds
+./autogen.sh
+
+./configure
+
+make
+
+
+cd ~/.kreds/
 
 nano kreds.conf
 
@@ -67,18 +67,18 @@ daemon=1
 server=1
 
 
-cd Kreds/src/
+cd ~/kreds-core/src/
 
 ./kredsd
 
 Afer some time you can check your connection with
-./kredsd getinfo 
+./kreds-cli getinfo 
 
 Output should look like :
 
-{    "version" : 1020701,  
-    "protocolversion" : 70082,    
-    "walletversion" : 61000,    
+{    "version" : 1000000,  
+    "protocolversion" : 70083,    
+    "walletversion" : 130000,    
     "balance" : 5985.07007229,    
     "blocks" : 284984,    
     "timeoffset" : 0,    
