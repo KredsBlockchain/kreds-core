@@ -40,6 +40,10 @@
 #include "sph_skein.h"
 #include "Lyra2.h"
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 void lyra2re_hash(const char* input, char* output)
 {
     sph_blake256_context     ctx_blake;
@@ -108,3 +112,7 @@ void lyra2re2_hash(const char* input, char* output)
     
    	memcpy(output, hashA, 32);
 }
+
+#ifdef __cplusplus
+}
+#endif

@@ -1,5 +1,4 @@
-
-// Copyright (c) 2009-2012 The Kreds developers
+// Copyright (c) 2018 The Kreds developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #ifndef SPORK_H
@@ -15,6 +14,11 @@
 #include "script/script.h"
 #include "base58.h"
 #include "net_processing.h"
+#include "protocol.h"
+#include "utilstrencodings.h"
+//#include "darksend.h"
+#include "validation.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace std;
 using namespace boost;
@@ -28,7 +32,7 @@ using namespace boost;
 #define SPORK_6_NOTUSED                                       10005
 #define SPORK_7_MASTERNODE_SCANNING                           10006
 
-#define SPORK_1_MASTERNODE_PAYMENTS_ENFORCEMENT_DEFAULT       1424217600 // genesis but payments only after block 15000
+#define SPORK_1_MASTERNODE_PAYMENTS_ENFORCEMENT_DEFAULT       1517851800 // genesis but payments only after block 15000
 #define SPORK_2_INSTANTX_DEFAULT                              978307200
 #define SPORK_3_INSTANTX_BLOCK_FILTERING_DEFAULT              1424217600
 #define SPORK_5_MAX_VALUE_DEFAULT                             10000
@@ -37,20 +41,6 @@ using namespace boost;
 class CSporkMessage;
 class CSporkManager;
 class CProcessSpork;
-
-//#include "bignum.h"
-#include "net.h"
-#include "key.h"
-#include "util.h"
-#include "protocol.h"
-#include "sync.h"
-#include "utilstrencodings.h"
-//#include "darksend.h"
-#include "validation.h"
-#include <boost/lexical_cast.hpp>
-
-using namespace std;
-using namespace boost;
 
 extern std::map<uint256, CSporkMessage> mapSporks;
 extern std::map<int, CSporkMessage> mapSporksActive;
@@ -111,10 +101,9 @@ private:
 public:
 
     CSporkManager() {
-        
-    // 100: G=0 101: MK just test
-        strMainPubKey = "04d073216cf3a1293a3fd7d2e72ba005416122c93193812bb92b8a7846420c7aa941327b062ee00b0d1d31cdeaa26a740ae4e962ecd1a8f71bb8ebdc14035e6fa6";
-        strTestPubKey = "043073216cf3a1293a3fd7d2e72ba005416122c93193812bb92b8a7846420c7aa941327b062ee00b0d1d31cdeaa26a740ae4e962ecd1a8f71bb8ebdc14035e6fa6";
+
+        strMainPubKey = "04521CAE97FEE1CA1F67B4B6D5E4323125D63DBA5291CF2609F71234ED86355A109140B3316366CAD47DCD2D0C04326A3233AC7797231F0AF88C1FE6FE94B7E37C";
+        strTestPubKey = "04CBC82D432A42A05F9474A5554413A6166767C928DE669C40144DC585FB85F15E28035EADE398A6B8E38C24A001EAB50023124C4D8328C99EC2FDE47ED54B17BF";
     }
 
     std::string GetSporkNameByID(int id);

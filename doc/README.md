@@ -1,4 +1,4 @@
-Kreds 1.0.0.0
+Kreds 1.0.0.1
 ====================
 
 Copyright (c) 2009-2017 Kreds Developers

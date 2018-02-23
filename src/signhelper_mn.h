@@ -1,18 +1,12 @@
-
-
 #include "validation.h"
-
 #include "sync.h"
 #include "activemasternode.h"
-
-
-
 
 class CMNSignHelper{
 
 	public:
 	CScript collateralPubKey;
-    /// Is the inputs associated with this public key? (and there is 14000 BSD - checking if valid masternode)
+    /// Is the inputs associated with this public key? (and there is 50000 KREDS - checking if valid masternode)
     bool IsVinAssociatedWithPubkey(CTxIn& vin, CPubKey& pubkey){
 		CScript payee2;
 		payee2=GetScriptForDestination(pubkey.GetID());
@@ -93,9 +87,7 @@ class CMNSignHelper{
     void InitCollateralAddress(){
         std::string strAddress = "";
         
-            strAddress = "iFoxApoYXNgEsstxaaGtn1NnbvuSL34726";
-            //LogPrintf("Zugriff auf StrAdress 341 darksend.h\n");
-        
+        strAddress = "";        
         
         SetCollateralAddress(strAddress);
     }
@@ -104,8 +96,5 @@ class CMNSignHelper{
 
 void ThreadBitPool();
 
-
-
 extern CMNSignHelper darkSendSigner;
 extern std::string strMasterNodePrivKey;
-

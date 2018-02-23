@@ -628,9 +628,11 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, const std::string& strCommand,
             return;
         }
 
+        if(addr.GetPort() != 3950 && Params().NetworkIDString() == CBaseChainParams::MAIN) {
+            LogPrintf("dsee - Got bad mainnet Masternode port: Actual:%d => Expected:%d\n", addr.GetPort(), 3950);
+            return;
         
-        if(addr.GetPort() != 3950) return;
-        
+        }   
 
         //search existing Masternode list, this is where we update existing Masternodes with new dsee broadcasts
         CMasternode* pmn = this->Find(vin);
@@ -760,7 +762,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, const std::string& strCommand,
         bool stop;
         vRecv >> vin >> vchSig >> sigTime >> stop;
 
-        //if(!fDebug){LogPrintf("dseep - Received: vin: %s sigTime: %lld stop: %s\n", vin.ToString().c_str(), sigTime, stop ? "true" : "false");}
+        LogPrintf("dseep - Received: vin: %s sigTime: %lld stop: %s\n", vin.ToString().c_str(), sigTime, stop ? "true" : "false");
 
         if (sigTime > GetAdjustedTime() + 60 * 60) {
             LogPrintf("dseep - Signature rejected, too far into the future %s\n", vin.ToString().c_str());
@@ -776,7 +778,8 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, const std::string& strCommand,
         CMasternode* pmn = this->Find(vin);
         if(pmn != NULL && pmn->protocolVersion >= MIN_PEER_PROTO_VERSION)
         {
-            // LogPrintf("dseep - Found corresponding mn for vin: %s\n", vin.ToString().c_str());
+            LogPrintf("dseep - Found corresponding mn for vin: %s\n", vin.ToString().c_str());
+            
             // take this only if it's newer
             if(pmn->lastDseep < sigTime)
             {

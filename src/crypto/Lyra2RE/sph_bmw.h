@@ -36,6 +36,10 @@
 #ifndef SPH_BMW_H__
 #define SPH_BMW_H__
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 #include <stddef.h>
 #include "sph_types.h"
 
@@ -317,5 +321,8 @@ void sph_bmw512_addbits_and_close(
 
 #endif
 
+#ifdef __cplusplus
+}
 #endif
 
+#endif

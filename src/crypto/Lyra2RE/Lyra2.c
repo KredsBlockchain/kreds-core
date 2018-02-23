@@ -24,6 +24,10 @@
 #include "Lyra2.h"
 #include "Sponge.h"
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 /**
  * Executes Lyra2 based on the G function from Blake2b. This version supports salts and passwords
  * whose combined length is smaller than the size of the memory matrix, (i.e., (nRows x nCols x b) bits,
@@ -380,3 +384,7 @@ int LYRA2_old(void *K, uint64_t kLen, const void *pwd, uint64_t pwdlen, const vo
 
     return 0;
 }
+
+#ifdef __cplusplus
+}
+#endif

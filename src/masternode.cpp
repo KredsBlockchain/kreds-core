@@ -264,7 +264,7 @@ void CMasternode::Check()
 
     if(nScanningErrorCount >= MASTERNODE_SCANNING_ERROR_THESHOLD)
     {
-        activeState = MASTERNODE_POS_ERROR; // BBBBB
+        activeState = MASTERNODE_POS_ERROR;
         return;
     }
 
@@ -285,7 +285,7 @@ void CMasternode::Check()
     if(!unitTest){
         CValidationState state;
 		CMutableTransaction mtx;
-        CTxOut vout = CTxOut(4999.99*COIN, darkSendSigner.collateralPubKey);
+        CTxOut vout = CTxOut(MASTERNODEAMOUNT * COIN, darkSendSigner.collateralPubKey);
         mtx.vin.push_back(vin);
         mtx.vout.push_back(vout);
 		
@@ -384,10 +384,10 @@ bool CMasternodePayments::GetWinningMasternode(int nBlockHeight, CTxIn& vinOut)
 bool CMasternodePayments::AddWinningMasternode(CMasternodePaymentWinner& winnerIn)
 {
     uint256 blockHash = uint256();
-	//UintToArith256(blockHash) = 0;
-    if(!GetBlockHash(blockHash, winnerIn.nBlockHeight-576)) {
-        return false;
-    }
+
+    /*if(!GetBlockHash(blockHash, winnerIn.nBlockHeight-15)) {
+          return false;
+    }*/
 
     winnerIn.score = CalculateScore(blockHash, winnerIn.vin);
 

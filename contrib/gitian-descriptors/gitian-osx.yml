@@ -1,5 +1,5 @@
 ---
-name: "kreds-osx-1.0.0.0"
+name: "kreds-osx-1.0.0.1"
 enable_cache: true
 suites:
 - "trusty"
