@@ -5,7 +5,7 @@ Some notes on how to build a Kreds Masternode in Ubuntu server. Using Windows Qt
 
 System requirements
 --------------------
-An Ubuntu 14.10 64bit server is recommended with at least 768MB 
+On Ubuntu 64bit server is recommended with at least 768MB 
 of memory and 15GB space available when running a Masternode.
 
 
@@ -29,15 +29,6 @@ Open your Windows Kreds-Qt Client and open the debug console.
 	---
 	encryptwallet "strong password"
 	Send 50000 KREDS to "address 0"
-	
-	
-	Rent a Vultr Ubuntu 14.10 64bit server
-	--------------------------------------
-	https://www.vultr.com
-	
-	Vultr accepts Kreds payments.
-	
-
 
 Build Instructions: Ubuntu & Debian
 -----------------------------------
@@ -62,7 +53,7 @@ Build Instructions: Ubuntu & Debian
 	optional, if problems with boost version: 
 	$ sudo apt-get remove libboost*
 	$ sudo apt-get purge libboost*
-	$ sudo apt-get install libboost1.54-all-dev
+	$ sudo apt-get install libboost-all-dev
 
 
 	Swapfile:
@@ -83,12 +74,12 @@ Build Instructions: Ubuntu & Debian
 	$ sudo ufw status
 
 
-	Install BSD
+	Install Kreds
 	------------
 	mkdir .kreds
 	cd .kreds
-	wget https://github.com/LIMXTEC/Kreds/releases/download/BSD1271/Linux.tar
-	tar xvzf Linux.tar
+	wget https://github.com/KredsBlockchain/kreds-core/releases/download/v1.0.0.1/kreds-linux64-v1.0.0.1.tar.xz
+	tar xf kreds-linux64-v1.0.0.1.tar.xz
 	
 	$ sudo cp kredsd /usr/bin
 	$ sudo chmod 775 /usr/bin/kredsd
@@ -181,30 +172,3 @@ Windows Kreds-Qt Client configuration
 	masternode stop
 	getinfo
 	help
-
-	
-Updating the Masternode & OpenSSL version
------------------------------------------
-
-	./kreds.cli setgenerate false
-	./kredsd stop
-
-	$ sudo apt-get remove libssl1.0.0*
-	$ sudo apt-get install -f
-
-	$ wget http://ftp.us.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.2d-1_amd64.deb
-	$ sudo dpkg -i libssl1.0.0_1.0.2d-1_amd64.deb
-
-	$ wget http://ftp.us.debian.org/debian/pool/main/o/openssl/libssl-dev_1.0.2d-1_amd64.deb
-	$ sudo dpkg -i libssl-dev_1.0.2d-1_amd64.deb
-
-	$ wget http://ftp.us.debian.org/debian/pool/main/o/openssl/openssl_1.0.2d-1_amd64.deb
-	$ sudo dpkg -i openssl_1.0.2d-1_amd64.deb
-
-	$ openssl version
-	
-	./kredsd
-	./kredsd getinfo
-	
-	./kreds.cli setgenerate true
-	./kreds.cli gethashespersec
