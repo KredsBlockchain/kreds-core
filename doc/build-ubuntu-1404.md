@@ -17,7 +17,7 @@ Cron Swapfile
 
 Install Addons :
 ----------------
-    apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev
+    apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev automake
     apt-get install libboost-all-dev git npm nodejs nodejs-legacy libminiupnpc-dev redis-server libevent-dev
     add-apt-repository ppa:bitcoin/bitcoin
     apt-get update
