@@ -7,6 +7,7 @@
 
 #include "validation.h"
 
+#include "coins.h"
 #include "arith_uint256.h"
 #include "chainparams.h"
 #include "checkpoints.h"
@@ -43,7 +44,9 @@
 #include "validationinterface.h"
 #include "versionbits.h"
 #include "warnings.h"
-
+#include "masternodeman.h"
+#include "masternode-pos.h"
+#include "activemasternode.h"
 #include <atomic>
 #include <sstream>
 
@@ -2104,6 +2107,46 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
         flags |= SCRIPT_VERIFY_WITNESS;
         flags |= SCRIPT_VERIFY_NULLDUMMY;
     }
+    
+    //Ensure Masternode Payment (EMP) enforced from block 20k onward
+    if(pindex->nHeight > chainparams.GetConsensus().MasternodePaymentStartHeight + 5000)
+    {
+        bool missingMNPayment = true;
+        bool incorrectMNPayment = false;
+        CScript payee;
+
+        if(!masternodePayments.GetBlockPayee(pindex->nHeight, payee)
+           || payee == CScript()) {
+        }
+        else
+        {
+            CTxDestination txdestaddr;
+            ExtractDestination(payee, txdestaddr);
+            CKredsAddress address(txdestaddr);
+
+            LogPrintf("EMP: block Masternode payee %s\n", address.ToString());
+            const CTransaction &tx = *(block.vtx[0]);
+            
+            CAmount nValue = block.vtx[0]->GetValueOut();
+
+            BOOST_FOREACH(const CTxOut& output, tx.vout) {
+                if (output.scriptPubKey == payee) {
+                    LogPrintf("EMP: block Masternode payment %d\n", output.nValue);
+                    if(output.nValue == 0 || output.nValue > 0.5) {
+                        incorrectMNPayment = true;
+                        break;
+                    } else {
+                        missingMNPayment = false;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (missingMNPayment || incorrectMNPayment) {
+            return state.DoS(100, error("%s: missing(%d) and/or incorrect(%d) masternode payment", __func__, missingMNPayment, incorrectMNPayment), REJECT_INVALID, "cb-missing-mn-payment");
+        }
+    }
 
     int64_t nTime2 = GetTimeMicros(); nTimeForks += nTime2 - nTime1;
     LogPrint("bench", "    - Fork checks: %.2fms [%.2fs]\n", 0.001 * (nTime2 - nTime1), nTimeForks * 0.000001);
@@ -3182,18 +3225,28 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                         foundPaymentAndPayee = true;
 						LogPrintf("CheckBlock() : Using non-specific masternode payments %d\n", chainActive.Tip()->nHeight+1);
 				    }
-					// todo-- must notice block.vtx[]. to block.vtx[]->
-					// Funtion no Intitial Download
-					for (unsigned int i = 0; i < block.vtx[0]->vout.size(); i++) {
-						if(block.vtx[0]->vout[i].nValue == masternodePaymentAmount ){
-							foundPaymentAmount = true;
-						}
-						if(block.vtx[0]->vout[i].scriptPubKey == payee ){
-                            foundPayee = true;
-						}
-						if(block.vtx[0]->vout[i].nValue == masternodePaymentAmount && block.vtx[0]->vout[i].scriptPubKey == payee){
+
+                    const CTransaction &tx = *(block.vtx[0]);
+
+                    BOOST_FOREACH(const CTxOut& output, tx.vout) {
+                        if (output.scriptPubKey == payee &&
+                                output.nValue <= nValue * 0.5) {
                             foundPaymentAndPayee = true;
-						}
+                            break;
+                        }
+
+                        if (output.nValue == masternodePaymentAmount) {
+                            CTxDestination address1;
+                            ExtractDestination(output.scriptPubKey, address1);
+                            CKredsAddress address2(address1);
+
+                            if(fDebug) LogPrintf("CheckBlock() : found payment[%d|%d] or payee[%d|%s] nHeight %d. \n", true, masternodePaymentAmount, foundPayee, address2.ToString().c_str(), chainActive.Tip()->nHeight+1);
+
+                            foundPaymentAmount = true;
+                        }
+
+                        if (output.scriptPubKey == payee)
+                            foundPayee = true;
                     }
 				
                     CTxDestination address1;

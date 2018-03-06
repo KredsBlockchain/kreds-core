@@ -46,4 +46,8 @@ fi
 # only update build.h if necessary
 if [ "$INFO" != "$NEWINFO" ]; then
     echo "$NEWINFO" >"$FILE"
+<<<<<<< Updated upstream
 fi
+=======
+fi
+>>>>>>> Stashed changes
