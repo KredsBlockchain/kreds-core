@@ -2155,16 +2155,6 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
 			LogPrintf("EMP: block coinbase transaction malformed: vouts=%d!\n", tx.vout.size());
 			missingMNPayment = true;
 		}
-		/*
-		else {
-			unsigned int blockRewardTargetCount = 0;
-			BOOST_FOREACH(const CTxOut& output, tx.vout) {
-				if (output.scriptPubKey != Params().GetTreasuryRewardScriptAtHeight(pindex->nHeight) && output.scriptPubKey != CScript()) {
-					if (output.nValue > (
-				}
-			}
-		}
-		*/
 	}
         if (missingMNPayment || incorrectMNPayment) {
             return state.DoS(100, error("%s: missing(%d) and/or incorrect(%d) masternode payment", __func__, missingMNPayment, incorrectMNPayment), REJECT_INVALID, "cb-missing-mn-payment");
@@ -3891,7 +3881,7 @@ bool CheckDiskSpace(uint64_t nAdditionalBytes)
 
     // Check for nMinDiskSpace bytes (currently 50MB)
     if (nFreeBytesAvailable < nMinDiskSpace + nAdditionalBytes)
-       return AbortNode("Disk space is low!", _("Error: Disk space is low!"));
+    	return AbortNode("Disk space is low!", _("Error: Disk space is low!"));
 
     return true;
 }
@@ -4792,4 +4782,3 @@ public:
         mapBlockIndex.clear();
     }
 } instance_of_cmaincleanup;
-
