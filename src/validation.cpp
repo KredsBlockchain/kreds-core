@@ -2109,15 +2109,15 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     }
     
     //Ensure Masternode Payment (EMP) enforced from block 20k onward
-    if(pindex->nHeight > chainparams.GetConsensus().MasternodePaymentStartHeight + 5000)
+    if(pindex->nHeight >= chainparams.GetConsensus().MasternodePaymentStartHeight + 7650)
     {
         bool missingMNPayment = true;
         bool incorrectMNPayment = false;
+	bool nonSpecific = false;
         CScript payee;
-
-        if(!masternodePayments.GetBlockPayee(pindex->nHeight, payee)
-           || payee == CScript()) {
-        }
+        if(!masternodePayments.GetBlockPayee(pindex->nHeight, payee) || payee == CScript()) {
+		nonSpecific = true;
+       	}
         else
         {
             CTxDestination txdestaddr;
@@ -2126,13 +2126,12 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
 
             LogPrintf("EMP: block Masternode payee %s\n", address.ToString());
             const CTransaction &tx = *(block.vtx[0]);
-            
             CAmount nValue = block.vtx[0]->GetValueOut();
 
             BOOST_FOREACH(const CTxOut& output, tx.vout) {
                 if (output.scriptPubKey == payee) {
                     LogPrintf("EMP: block Masternode payment %d\n", output.nValue);
-                    if(output.nValue == 0 || output.nValue > 0.5) {
+                    if(output.nValue == 0 || output.nValue > nValue * 0.5) {
                         incorrectMNPayment = true;
                         break;
                     } else {
@@ -2142,7 +2141,31 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
                 }
             }
         }
-
+	if(nonSpecific) {
+		const CTransaction &tx = *(block.vtx[0]);
+		CAmount nValue = block.vtx[0]->GetValueOut();
+		CAmount masternodeValue = GetMasternodePayment(pindex->nHeight, nValue, chainparams.GetConsensus());
+		CAmount minerValue = nValue - masternodeValue;
+		missingMNPayment = false;
+		//No Nodes
+		if (masternodeValue == 0) {
+			missingMNPayment = false;
+		} 
+		else if (tx.vout.size() < 2) {
+			LogPrintf("EMP: block coinbase transaction malformed: vouts=%d!\n", tx.vout.size());
+			missingMNPayment = true;
+		}
+		/*
+		else {
+			unsigned int blockRewardTargetCount = 0;
+			BOOST_FOREACH(const CTxOut& output, tx.vout) {
+				if (output.scriptPubKey != Params().GetTreasuryRewardScriptAtHeight(pindex->nHeight) && output.scriptPubKey != CScript()) {
+					if (output.nValue > (
+				}
+			}
+		}
+		*/
+	}
         if (missingMNPayment || incorrectMNPayment) {
             return state.DoS(100, error("%s: missing(%d) and/or incorrect(%d) masternode payment", __func__, missingMNPayment, incorrectMNPayment), REJECT_INVALID, "cb-missing-mn-payment");
         }
@@ -3868,7 +3891,7 @@ bool CheckDiskSpace(uint64_t nAdditionalBytes)
 
     // Check for nMinDiskSpace bytes (currently 50MB)
     if (nFreeBytesAvailable < nMinDiskSpace + nAdditionalBytes)
-        return AbortNode("Disk space is low!", _("Error: Disk space is low!"));
+       return AbortNode("Disk space is low!", _("Error: Disk space is low!"));
 
     return true;
 }
@@ -4769,3 +4792,4 @@ public:
         mapBlockIndex.clear();
     }
 } instance_of_cmaincleanup;
+
