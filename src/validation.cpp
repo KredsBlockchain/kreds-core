@@ -2108,8 +2108,8 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
         flags |= SCRIPT_VERIFY_NULLDUMMY;
     }
     
-    //Ensure Masternode Payment (EMP) enforced from block 20k onward
-    if(pindex->nHeight >= chainparams.GetConsensus().MasternodePaymentStartHeight + 7650)
+    //Ensure Masternode Payment (EMP) enforced from block 30k onward
+    if(pindex->nHeight >= chainparams.GetConsensus().MasternodePaymentStartHeight + 15000)
     {
         bool missingMNPayment = true;
         bool incorrectMNPayment = false;
