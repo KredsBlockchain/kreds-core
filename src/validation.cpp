@@ -1142,7 +1142,7 @@ bool AcceptableInputs(CTxMemPool& pool, CValidationState &state, const CTransact
 		CCoinsView dummy;
         CCoinsViewCache view(&dummy);
 
-        CAmount nValueIn = 0;
+        //CAmount nValueIn;
         LockPoints lp;
         {
         LOCK(pool.cs);
@@ -1175,7 +1175,7 @@ bool AcceptableInputs(CTxMemPool& pool, CValidationState &state, const CTransact
         // Bring the best block into scope
         view.GetBestBlock();
 
-        nValueIn = view.GetValueIn(tx);
+        //nValueIn = view.GetValueIn(tx);
 
         // we have all inputs cached now, so switch back to dummy, so we don't need to keep lock on mempool
         view.SetBackend(dummy);
@@ -2145,7 +2145,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
 		const CTransaction &tx = *(block.vtx[0]);
 		CAmount nValue = block.vtx[0]->GetValueOut();
 		CAmount masternodeValue = GetMasternodePayment(pindex->nHeight, nValue, chainparams.GetConsensus());
-		CAmount minerValue = nValue - masternodeValue;
+		// CAmount minerValue = nValue - masternodeValue;
 		missingMNPayment = false;
 		//No Nodes
 		if (masternodeValue == 0) {

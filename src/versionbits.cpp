@@ -147,17 +147,19 @@ private:
 protected:
     int64_t BeginTime(const Consensus::Params& params) const { return params.vDeployments[id].nStartTime; }
     int64_t EndTime(const Consensus::Params& params) const { return params.vDeployments[id].nTimeout; }
-	int64_t Height(const Consensus::Params& params) const { return params.vDeployments[id].nHeight; }
+    int64_t Height(const Consensus::Params& params) const { return params.vDeployments[id].nHeight; }
     
     int Period(const Consensus::Params& params) const {
-    if (params.vDeployments[id].nOverrideMinerConfirmationWindow > 0)
-        return params.vDeployments[id].nOverrideMinerConfirmationWindow;
+        if (params.vDeployments[id].nOverrideMinerConfirmationWindow > 0) {
+            return params.vDeployments[id].nOverrideMinerConfirmationWindow;
+        }
         return params.nMinerConfirmationWindow;
     }
 
     int Threshold(const Consensus::Params& params) const {
-        if (params.vDeployments[id].nOverrideRuleChangeActivationThreshold > 0)
+        if (params.vDeployments[id].nOverrideRuleChangeActivationThreshold > 0) {
             return params.vDeployments[id].nOverrideRuleChangeActivationThreshold;
+        }
         return params.nRuleChangeActivationThreshold;
     }
 

@@ -60,17 +60,19 @@ void CActiveMasternode::ManageStatus()
             return;
         }
 		
-		bool pnode1 = g_connman->OpenNetworkConnection((CAddress)service, false, NULL, service.ToString().c_str());
 		/**We try here to stablish a connection, 
 		* Since if we are running masternode, then client will connect to itself
 		* to avoid it , we try a connection, and leave
 		* This is the expected.
+		
+				bool pnode1 = g_connman->OpenNetworkConnection((CAddress)service, false, NULL, service.ToString().c_str());
 				if(pnode1){//todo++ object added
 					notCapableReason = "Could not connect to " + service.ToString();
 					status = MASTERNODE_NOT_CAPABLE;
 					LogPrintf("CActiveMasternode::ManageStatus() - not capable: %s\n", notCapableReason.c_str());
 					return;
 				}
+
 		**/
 
         if(pwalletMain->IsLocked()){

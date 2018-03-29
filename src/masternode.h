@@ -292,7 +292,8 @@ public:
 	{ 
 		arith_uint256 n2, n3; 
 	
-		int nBlockTime = chainActive.Tip()->GetBlockTime();
+		// Lobos - Unused variable warning
+		// int nBlockTime = chainActive.Tip()->GetBlockTime();
 	    
 		n2 = UintToArith256(Hash(BEGIN(nBlockHeight), END(nBlockHeight)));
 		n3 = UintToArith256(vin.prevout.hash) > n2 ? UintToArith256(vin.prevout.hash) - n2 : n2 - UintToArith256(vin.prevout.hash);

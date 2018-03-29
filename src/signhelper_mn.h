@@ -21,9 +21,9 @@ class CMNSignHelper{
 					}
 				}
 			}
-		} else{
-			return false;
-		}
+		} 
+
+		return false;
 	}
     /// Set the private/public key values, returns true if successful
     bool SetKey(std::string strSecret, std::string& errorMessage, CKey& key, CPubKey& pubkey){
