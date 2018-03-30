@@ -138,11 +138,12 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
 
     pblocktemplate.reset(new CBlockTemplate());
 
-    if(!pblocktemplate.get())
+    if (!pblocktemplate.get()) {
         return nullptr;
+    }
+
     pblock = &pblocktemplate->block; // pointer for convenience
-	
-	int payments = 1;
+    int payments = 1;
 
     // Add dummy coinbase tx as first transaction
     /*pblock->vtx.emplace_back();
@@ -161,8 +162,8 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
 
     pblock->nTime = GetAdjustedTime();
     const int64_t nMedianTimePast = pindexPrev->GetMedianTimePast();
-	
-	pblock->vtx.emplace_back();
+
+    pblock->vtx.emplace_back();
     pblocktemplate->vTxFees.push_back(-1); // updated at end
     pblocktemplate->vTxSigOpsCost.push_back(-1);
 
@@ -184,10 +185,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     addPackageTxs(nPackagesSelected, nDescendantsUpdated);
 
     int64_t nTime1 = GetTimeMicros();
-	
-	
 
-	
     nLastBlockTx = nBlockTx;
     nLastBlockSize = nBlockSize;
     nLastBlockWeight = nBlockWeight;
@@ -198,18 +196,18 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     coinbaseTx.vin[0].prevout.SetNull();
     coinbaseTx.vout.resize(1);
     coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
-	
-	// start masternode payments
-    bool bMasterNodePayment = 
-        pindexPrev->nHeight >= chainparams.GetConsensus().MasternodePaymentStartHeight;
-	
-	if(bMasterNodePayment) {
+
+    // start masternode payments
+    bool bMasterNodePayment = pindexPrev->nHeight >= chainparams.GetConsensus().MasternodePaymentStartHeight;
+
+    if (bMasterNodePayment) {
         bool hasPayment = true;
             //spork
-        if(!masternodePayments.GetBlockPayee(pindexPrev->nHeight+1, pblock->payee)){
-                //no masternode detected
+        if (!masternodePayments.GetBlockPayee(pindexPrev->nHeight+1, pblock->payee)) {
+            //no masternode detected
             CMasternode* winningNode = mnodeman.GetCurrentMasterNode(1);
-            if(winningNode){
+
+            if (winningNode) {
                 pblock->payee = GetScriptForDestination(winningNode->pubkey.GetID());
             } else {
                 LogPrintf("CreateNewBlock: Failed to detect masternode to pay\n");
@@ -217,7 +215,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
             }
         }
 
-        if(hasPayment){
+        if (hasPayment) {
             payments++;
             coinbaseTx.vout.resize(payments);
 
@@ -231,16 +229,16 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
             LogPrintf("Masternode payment to %s\n", address2.ToString().c_str());
         }
     }
-	CAmount blockValue = nFees + GetBlockSubsidy(pindexPrev->nBits, pindexPrev->nHeight + 1, Params().GetConsensus());
+    CAmount blockValue = nFees + GetBlockSubsidy(pindexPrev->nBits, pindexPrev->nHeight + 1, Params().GetConsensus());
     CAmount masternodePayment = GetMasternodePayment(pindexPrev->nHeight+1, blockValue, Params().GetConsensus());
 
     //create masternode payment
-    if(payments > 1){
+    if (payments > 1) {
         coinbaseTx.vout[payments-1].nValue = masternodePayment;
         blockValue -= masternodePayment;
     }
     coinbaseTx.vout[0].nValue = blockValue; // else if payments either equal to 1, 
-	
+
     //coinbaseTx.vout[0].nValue = nFees + GetBlockSubsidy(nHeight, chainparams.GetConsensus());//TODO-- 
     coinbaseTx.vin[0].scriptSig = CScript() << nHeight << OP_0;
     pblock->vtx[0] = MakeTransactionRef(std::move(coinbaseTx));

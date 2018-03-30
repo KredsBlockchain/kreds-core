@@ -72,7 +72,7 @@ public:
     ADD_SERIALIZE_METHODS;
     template <typename Stream, typename Operation>
     inline void SerializationOp(Stream& s, Operation ser_action)
-	{
+    {
         // serialized format:
         // * version byte (currently 0)
         // * masternodes vector
@@ -143,8 +143,8 @@ public:
 
     void RelayMasternodeEntry(const CTxIn vin, const CService addr, const std::vector<unsigned char> vchSig, const int64_t nNow, const CPubKey pubkey, const CPubKey pubkey2, const int count, const int current, const int64_t lastUpdated, const int protocolVersion, CScript donationAddress, int donationPercentage, CConnman& connman);
     void RelayMasternodeEntryPing(const CTxIn vin, const std::vector<unsigned char> vchSig, const int64_t nNow, const bool stop, CConnman& connman);
-	
-	void RelayNormalMasternodeEntry(const CTxIn vin, const CService addr, const std::vector<unsigned char> vchSig, const int64_t nNow, const CPubKey pubkey, const CPubKey pubkey2, const int count, const int current, const int64_t lastUpdated, const int protocolVersion, CScript donationAddress, int donationPercentage);
+
+    void RelayNormalMasternodeEntry(const CTxIn vin, const CService addr, const std::vector<unsigned char> vchSig, const int64_t nNow, const CPubKey pubkey, const CPubKey pubkey2, const int count, const int current, const int64_t lastUpdated, const int protocolVersion, CScript donationAddress, int donationPercentage);
     void RelayNormalMasternodeEntryPing(const CTxIn vin, const std::vector<unsigned char> vchSig, const int64_t nNow, const bool stop);
 
     void Remove(CTxIn vin);

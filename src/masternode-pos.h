@@ -32,10 +32,10 @@ extern CMasternodeMessagePOS mnMessagePos;
 static const int MIN_MASTERNODE_POS_PROTO_VERSION = 70080;
 
 /*
-	1% of the network is scanned every 2.5 minutes, making a full
-	round of scanning take about 4.16 hours. We're targeting about
-	a day of proof-of-service errors for complete removal from the
-	masternode system.
+    1% of the network is scanned every 2.5 minutes, making a full
+    round of scanning take about 4.16 hours. We're targeting about
+    a day of proof-of-service errors for complete removal from the
+    masternode system.
 */
 static const int MASTERNODE_SCANNING_ERROR_THESHOLD = 6;
 
@@ -79,11 +79,11 @@ public:
 
     CMasternodeScanningError (CTxIn& vinMasternodeAIn, CTxIn& vinMasternodeBIn, int nErrorTypeIn, int nBlockHeightIn)
     {
-    	vinMasternodeA = vinMasternodeAIn;
-    	vinMasternodeB = vinMasternodeBIn;
-    	nErrorType = nErrorTypeIn;
-    	nExpiration = GetTime()+(60*60);
-    	nBlockHeight = nBlockHeightIn;
+        vinMasternodeA = vinMasternodeAIn;
+        vinMasternodeB = vinMasternodeBIn;
+        nErrorType = nErrorTypeIn;
+        nExpiration = GetTime()+(60*60);
+        nBlockHeight = nBlockHeightIn;
     }
 
     CMasternodeScanningError (CTxIn& vinMasternodeBIn, int nErrorTypeIn, int nBlockHeightIn)
@@ -102,9 +102,10 @@ public:
     bool Sign();
     bool IsExpired() {return GetTime() > nExpiration;}
     void Relay(CNode* pnode, CConnman& connman);//
-	void RelayProcessBlock();
-    bool IsValid() {
-    	return (nErrorType > 0 && nErrorType <= SCANNING_ERROR_MAX);
+    void RelayProcessBlock();
+    bool IsValid() 
+    {
+        return (nErrorType > 0 && nErrorType <= SCANNING_ERROR_MAX);
     }
 
     ADD_SERIALIZE_METHODS;

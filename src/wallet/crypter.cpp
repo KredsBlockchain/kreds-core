@@ -23,15 +23,16 @@ int CCrypter::BytesToKeySHA512AES(const std::vector<unsigned char>& chSalt, cons
     // greater than the aes256 block size (16b) + aes256 key size (32b),
     // there's no need to process more than once (D_0).
 
-    if(!count || !key || !iv)
+    if (!count || !key || !iv)
         return 0;
 
     unsigned char buf[CSHA512::OUTPUT_SIZE];
     CSHA512 di;
 
     di.Write((const unsigned char*)strKeyData.c_str(), strKeyData.size());
-    if(chSalt.size())
+    if (chSalt.size())
         di.Write(&chSalt[0], chSalt.size());
+
     di.Finalize(buf);
 
     for(int i = 0; i != count - 1; i++)
@@ -86,10 +87,10 @@ bool CCrypter::Encrypt(const CKeyingMaterial& vchPlaintext, std::vector<unsigned
 
     AES256CBCEncrypt enc(vchKey.data(), vchIV.data(), true);
     size_t nLen = enc.Encrypt(&vchPlaintext[0], vchPlaintext.size(), &vchCiphertext[0]);
-    if(nLen < vchPlaintext.size())
+    if (nLen < vchPlaintext.size())
         return false;
-    vchCiphertext.resize(nLen);
 
+    vchCiphertext.resize(nLen);
     return true;
 }
 
@@ -105,8 +106,9 @@ bool CCrypter::Decrypt(const std::vector<unsigned char>& vchCiphertext, CKeyingM
 
     AES256CBCDecrypt dec(vchKey.data(), vchIV.data(), true);
     nLen = dec.Decrypt(&vchCiphertext[0], vchCiphertext.size(), &vchPlaintext[0]);
-    if(nLen == 0)
+    if (nLen == 0)
         return false;
+
     vchPlaintext.resize(nLen);
     return true;
 }
@@ -121,7 +123,7 @@ bool CCrypter::Decrypt(const std::vector<unsigned char>& vchCiphertext, CKeyingM
     int nFLen = 0;
 
     // Verify key sizes
-    if(sKey.size() != 32 || sIV.size() != AES_BLOCK_SIZE) {
+    if (sKey.size() != 32 || sIV.size() != AES_BLOCK_SIZE) {
         LogPrintf("crypter EncryptAES256 - Invalid key or block size: Key: %d sIV:%d\n", sKey.size(), sIV.size());
         return false;
     }
@@ -153,8 +155,10 @@ static bool EncryptSecret(const CKeyingMaterial& vMasterKey, const CKeyingMateri
     CCrypter cKeyCrypter;
     std::vector<unsigned char> chIV(WALLET_CRYPTO_IV_SIZE);
     memcpy(&chIV[0], &nIV, WALLET_CRYPTO_IV_SIZE);
-    if(!cKeyCrypter.SetKey(vMasterKey, chIV))
+
+    if (!cKeyCrypter.SetKey(vMasterKey, chIV))
         return false;
+
     return cKeyCrypter.Encrypt(*((const CKeyingMaterial*)&vchPlaintext), vchCiphertext);
 }
 
@@ -163,8 +167,10 @@ static bool DecryptSecret(const CKeyingMaterial& vMasterKey, const std::vector<u
     CCrypter cKeyCrypter;
     std::vector<unsigned char> chIV(WALLET_CRYPTO_IV_SIZE);
     memcpy(&chIV[0], &nIV, WALLET_CRYPTO_IV_SIZE);
-    if(!cKeyCrypter.SetKey(vMasterKey, chIV))
+
+    if (!cKeyCrypter.SetKey(vMasterKey, chIV))
         return false;
+
     return cKeyCrypter.Decrypt(vchCiphertext, *((CKeyingMaterial*)&vchPlaintext));
 }
 /**TODO--*/
@@ -175,7 +181,7 @@ static bool DecryptSecret(const CKeyingMaterial& vMasterKey, const std::vector<u
     int nPLen = nLen, nFLen = 0;
 
     // Verify key sizes
-    if(sKey.size() != 32 || sIV.size() != AES_BLOCK_SIZE) {
+    if (sKey.size() != 32 || sIV.size() != AES_BLOCK_SIZE) {
         LogPrintf("crypter DecryptAES256 - Invalid key or block size\n");
         return false;
     }
@@ -202,7 +208,7 @@ static bool DecryptSecret(const CKeyingMaterial& vMasterKey, const std::vector<u
 static bool DecryptKey(const CKeyingMaterial& vMasterKey, const std::vector<unsigned char>& vchCryptedSecret, const CPubKey& vchPubKey, CKey& key)
 {
     CKeyingMaterial vchSecret;
-    if(!DecryptSecret(vMasterKey, vchCryptedSecret, vchPubKey.GetHash(), vchSecret))
+    if (!DecryptSecret(vMasterKey, vchCryptedSecret, vchPubKey.GetHash(), vchSecret))
         return false;
 
     if (vchSecret.size() != 32)

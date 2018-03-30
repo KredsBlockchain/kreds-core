@@ -26,6 +26,7 @@ base_uint<BITS>& base_uint<BITS>::operator<<=(unsigned int shift)
     base_uint<BITS> a(*this);
     for (int i = 0; i < WIDTH; i++)
         pn[i] = 0;
+
     int k = shift / 32;
     shift = shift % 32;
     for (int i = 0; i < WIDTH; i++) {
@@ -34,6 +35,7 @@ base_uint<BITS>& base_uint<BITS>::operator<<=(unsigned int shift)
         if (i + k < WIDTH)
             pn[i + k] |= (a.pn[i] << shift);
     }
+
     return *this;
 }
 
@@ -43,6 +45,7 @@ base_uint<BITS>& base_uint<BITS>::operator>>=(unsigned int shift)
     base_uint<BITS> a(*this);
     for (int i = 0; i < WIDTH; i++)
         pn[i] = 0;
+
     int k = shift / 32;
     shift = shift % 32;
     for (int i = 0; i < WIDTH; i++) {
@@ -51,6 +54,7 @@ base_uint<BITS>& base_uint<BITS>::operator>>=(unsigned int shift)
         if (i - k >= 0)
             pn[i - k] |= (a.pn[i] >> shift);
     }
+
     return *this;
 }
 
@@ -63,6 +67,7 @@ base_uint<BITS>& base_uint<BITS>::operator*=(uint32_t b32)
         pn[i] = n & 0xffffffff;
         carry = n >> 32;
     }
+
     return *this;
 }
 
@@ -79,6 +84,7 @@ base_uint<BITS>& base_uint<BITS>::operator*=(const base_uint& b)
             carry = n >> 32;
         }
     }
+
     return *this;
 }
 
@@ -90,10 +96,13 @@ base_uint<BITS>& base_uint<BITS>::operator/=(const base_uint& b)
     *this = 0;                   // the quotient.
     int num_bits = num.bits();
     int div_bits = div.bits();
+
     if (div_bits == 0)
         throw uint_error("Division by zero");
+
     if (div_bits > num_bits) // the result is certainly 0.
         return *this;
+
     int shift = num_bits - div_bits;
     div <<= shift; // shift so that div and num align.
     while (shift >= 0) {
@@ -104,6 +113,7 @@ base_uint<BITS>& base_uint<BITS>::operator/=(const base_uint& b)
         div >>= 1; // shift back.
         shift--;
     }
+
     // num now contains the remainder of the division.
     return *this;
 }
@@ -117,6 +127,7 @@ int base_uint<BITS>::CompareTo(const base_uint<BITS>& b) const
         if (pn[i] > b.pn[i])
             return 1;
     }
+
     return 0;
 }
 
@@ -127,10 +138,13 @@ bool base_uint<BITS>::EqualTo(uint64_t b) const
         if (pn[i])
             return false;
     }
+
     if (pn[1] != (b >> 32))
         return false;
+
     if (pn[0] != (b & 0xfffffffful))
         return false;
+
     return true;
 }
 
@@ -143,6 +157,7 @@ double base_uint<BITS>::getdouble() const
         ret += fact * pn[i];
         fact *= 4294967296.0;
     }
+
     return ret;
 }
 
@@ -182,6 +197,7 @@ unsigned int base_uint<BITS>::bits() const
             return 32 * pos + 1;
         }
     }
+
     return 0;
 }
 
@@ -207,6 +223,7 @@ arith_uint256& arith_uint256::SetCompact(uint32_t nCompact, bool* pfNegative, bo
 {
     int nSize = nCompact >> 24;
     uint32_t nWord = nCompact & 0x007fffff;
+
     if (nSize <= 3) {
         nWord >>= 8 * (3 - nSize);
         *this = nWord;
@@ -214,12 +231,15 @@ arith_uint256& arith_uint256::SetCompact(uint32_t nCompact, bool* pfNegative, bo
         *this = nWord;
         *this <<= 8 * (nSize - 3);
     }
+
     if (pfNegative)
         *pfNegative = nWord != 0 && (nCompact & 0x00800000) != 0;
+
     if (pfOverflow)
         *pfOverflow = nWord != 0 && ((nSize > 34) ||
                                      (nWord > 0xff && nSize > 33) ||
                                      (nWord > 0xffff && nSize > 32));
+
     return *this;
 }
 
@@ -227,22 +247,26 @@ uint32_t arith_uint256::GetCompact(bool fNegative) const
 {
     int nSize = (bits() + 7) / 8;
     uint32_t nCompact = 0;
+
     if (nSize <= 3) {
         nCompact = GetLow64() << 8 * (3 - nSize);
     } else {
         arith_uint256 bn = *this >> 8 * (nSize - 3);
         nCompact = bn.GetLow64();
     }
+
     // The 0x00800000 bit denotes the sign.
     // Thus, if it is already set, divide the mantissa by 256 and increase the exponent.
     if (nCompact & 0x00800000) {
         nCompact >>= 8;
         nSize++;
     }
+
     assert((nCompact & ~0x007fffff) == 0);
     assert(nSize < 256);
     nCompact |= nSize << 24;
     nCompact |= (fNegative && (nCompact & 0x007fffff) ? 0x00800000 : 0);
+
     return nCompact;
 }
 
@@ -251,6 +275,7 @@ uint256 ArithToUint256(const arith_uint256 &a)
     uint256 b;
     for(int x=0; x<a.WIDTH; ++x)
         WriteLE32(b.begin() + x*4, a.pn[x]);
+
     return b;
 }
 arith_uint256 UintToArith256(const uint256 &a)
@@ -258,5 +283,6 @@ arith_uint256 UintToArith256(const uint256 &a)
     arith_uint256 b;
     for(int x=0; x<b.WIDTH; ++x)
         b.pn[x] = ReadLE32(a.begin() + x*4);
+
     return b;
 }

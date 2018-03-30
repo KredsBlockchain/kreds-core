@@ -460,7 +460,7 @@ private:
     const int nType;
     const int nVersion;
 
-    FILE* file;	
+    FILE* file;
 
 public:
     CAutoFile(FILE* filenew, int nTypeIn, int nVersionIn) : nType(nTypeIn), nVersion(nVersionIn)

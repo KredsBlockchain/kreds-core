@@ -18,11 +18,12 @@ bool CMasternodeConfig::read(std::string& strErr) {
         return true; // No masternode.conf file is OK
     }
 
-    for(std::string line; std::getline(streamConfig, line); )
+    for (std::string line; std::getline(streamConfig, line); )
     {
-        if(line.empty()) {
+        if (line.empty()) {
             continue;
         }
+
         std::istringstream iss(line);
         std::string alias, ip, privKey, txHash, outputIndex, donation, donationAddress, donationPercent;
         if (!(iss >> alias >> ip >> privKey >> txHash >> outputIndex >> donation)) {
@@ -44,6 +45,7 @@ bool CMasternodeConfig::read(std::string& strErr) {
                 donationPercent = donation.substr(pos + 1);
                 donationAddress = donation.substr(0, pos);
             }
+
             CKredsAddress address(donationAddress);
             if (!address.IsValid()) {
                 strErr = "Invalid Kreds address in masternode.conf line: " + line;
@@ -51,21 +53,19 @@ bool CMasternodeConfig::read(std::string& strErr) {
                 return false;
             }
         }
-		
-		int port = 0;
+
+        int port = 0;
         std::string hostname = "";
 
-		SplitHostPort(ip, port, hostname);
+        SplitHostPort(ip, port, hostname);
         
-            if(port != 3950) {
-                strErr = "Invalid port detected in masternode.conf: " + line + " (must be 3950 for mainnet)";
-                streamConfig.close();
-                return false;
-            }
+        if (port != 3950) {
+            strErr = "Invalid port detected in masternode.conf: " + line + " (must be 3950 for mainnet)";
+            streamConfig.close();
+            return false;
+        }
         
-
-
-        add(alias, ip, privKey, txHash, outputIndex, donationAddress, donationPercent);
+        add (alias, ip, privKey, txHash, outputIndex, donationAddress, donationPercent);
     }
 
     streamConfig.close();

@@ -12,10 +12,10 @@ class CCoinControl
 {
 public:
     CTxDestination destChange;
-	
-	bool useDarkSend;// TODO--
+
+    bool useDarkSend;// TODO--
     bool useInstantX;//TODO--
-	
+
     //! If false, allows unselected inputs, but requires all selected inputs be used
     bool fAllowOtherInputs;
     //! Includes watch only addresses which match the ISMINE_WATCH_SOLVABLE criteria
@@ -40,7 +40,7 @@ public:
         fAllowOtherInputs = false;
         fAllowWatchOnly = false;
         setSelected.clear();
-		useInstantX = false;//TODO--
+        useInstantX = false;//TODO--
         useDarkSend = true;//TODO--
         nMinimumTotalFee = 0;
         nFeeRate = CFeeRate(0);

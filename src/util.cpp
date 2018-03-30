@@ -276,26 +276,28 @@ bool LogAcceptCategory(const char* category)
                 const vector<string>& categories = mapMultiArgs.at("-debug");
                 ptrCategory.reset(new set<string>(categories.begin(), categories.end()));
                 // thread_specific_ptr automatically deletes the set when the thread ends.
-				/**TODO-- */
-				// "kreds" is a composite category enabling all Kreds-related debug output
-				if(ptrCategory->count(string("kreds"))) {
-					ptrCategory->insert(string("darksend"));
-					ptrCategory->insert(string("instantx"));
-					ptrCategory->insert(string("masternode"));
-					ptrCategory->insert(string("keepass"));
-					ptrCategory->insert(string("mnpayments"));
-					//ptrCategory->insert(string("mnbudget"));//TODO-- ends
-				}
-            } else
+                /**TODO-- */
+                // "kreds" is a composite category enabling all Kreds-related debug output
+                if (ptrCategory->count(string("kreds"))) {
+                    ptrCategory->insert(string("darksend"));
+                    ptrCategory->insert(string("instantx"));
+                    ptrCategory->insert(string("masternode"));
+                    ptrCategory->insert(string("keepass"));
+                    ptrCategory->insert(string("mnpayments"));
+                    //ptrCategory->insert(string("mnbudget"));//TODO-- ends
+                }
+            } else {
                 ptrCategory.reset(new set<string>());
+            }
         }
         const set<string>& setCategories = *ptrCategory.get();
 
         // if not debugging everything and not debugging specific category, LogPrint does nothing.
         if (setCategories.count(string("")) == 0 &&
             setCategories.count(string("1")) == 0 &&
-            setCategories.count(string(category)) == 0)
+            setCategories.count(string(category)) == 0) {
             return false;
+        }
     }
     return true;
 }
@@ -597,8 +599,10 @@ boost::filesystem::path GetConfigFile(const std::string& confPath)
 boost::filesystem::path GetMasternodeConfigFile(/*const std::string& confPath*/)
 {
     boost::filesystem::path pathConfigFile(GetArg("-mnconf", "masternode.conf"));
-    if (!pathConfigFile.is_complete())
-		pathConfigFile = GetDataDir() / pathConfigFile;
+    if (!pathConfigFile.is_complete()) {
+        pathConfigFile = GetDataDir() / pathConfigFile;
+    }
+
     return pathConfigFile;
 }
 
@@ -607,7 +611,7 @@ void ReadConfigFile(const std::string& confPath)
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile(confPath));
     if (!streamConfig.good()){
-		/**TODO-- */
+        /**TODO-- */
         // Create empty kreds.conf if it does not excist
         //FILE* configFile = fopen(GetConfigFile().string().c_str(), "a");
         //if (configFile != NULL)
@@ -814,8 +818,7 @@ boost::filesystem::path GetSpecialFolderPath(int nFolder, bool fCreate)
 
     char pszPath[MAX_PATH] = "";
 
-    if(SHGetSpecialFolderPathA(NULL, pszPath, nFolder, fCreate))
-    {
+    if (SHGetSpecialFolderPathA(NULL, pszPath, nFolder, fCreate)) {
         return fs::path(pszPath);
     }
 

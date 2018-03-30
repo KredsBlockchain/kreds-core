@@ -285,7 +285,7 @@ void InitializeNode(CNode *pnode, CConnman& connman) {
         LOCK(cs_main);
         mapNodeState.emplace_hint(mapNodeState.end(), std::piecewise_construct, std::forward_as_tuple(nodeid), std::forward_as_tuple(addr, std::move(addrName)));
     }
-    if(!pnode->fInbound)
+    if (!pnode->fInbound)
         PushNodeVersion(pnode, connman, GetTime());
 }
 
@@ -926,19 +926,16 @@ bool static AlreadyHave(const CInv& inv) EXCLUSIVE_LOCKS_REQUIRED(cs_main)
                    mapOrphanTransactions.count(inv.hash) ||
                    pcoinsTip->HaveCoinsInCache(inv.hash);
         }
-	/**TODO-- */
+        /**TODO-- */
     case MSG_BLOCK:
     case MSG_WITNESS_BLOCK:
-		return mapBlockIndex.count(inv.hash);
-				
-	
-	/**TODO-- */
-	
+        return mapBlockIndex.count(inv.hash);
+        /**TODO-- */
     case MSG_SPORK:
         return mapSporks.count(inv.hash);
     case MSG_MASTERNODE_WINNER:
         return mapSeenMasternodeVotes.count(inv.hash);
-	case MSG_MASTERNODE_SCANNING_ERROR:
+    case MSG_MASTERNODE_SCANNING_ERROR:
         return mapMasternodeScanningErrors.count(inv.hash);
     }
     // Don't know what it is, just say we already got one
@@ -1132,32 +1129,36 @@ void static ProcessGetData(CNode* pfrom, const Consensus::Params& consensusParam
                     connman.PushMessage(pfrom, msgMaker.Make(nSendFlags, NetMsgType::TX, *mi->second));
                     push = true;
                 }
-				if (!push && inv.type == MSG_TX) {
-				    if (pfrom->timeLastMempoolReq) {
-                    auto txinfo = mempool.info(inv.hash);
-                    // To protect privacy, do not answer getdata using the mempool when
-                    // that TX couldn't have been INVed in reply to a MEMPOOL request.
-                    if (txinfo.tx && txinfo.nTime <= pfrom->timeLastMempoolReq) {
-                        connman.PushMessage(pfrom, msgMaker.Make(nSendFlags, NetMsgType::TX, *txinfo.tx));
-                        push = true;
-                    }
-                 }
-				}
+
+                if (!push && inv.type == MSG_TX) {
+                    if (pfrom->timeLastMempoolReq) {
+                        auto txinfo = mempool.info(inv.hash);
+                        // To protect privacy, do not answer getdata using the mempool when
+                        // that TX couldn't have been INVed in reply to a MEMPOOL request.
+                        if (txinfo.tx && txinfo.nTime <= pfrom->timeLastMempoolReq) {
+                            connman.PushMessage(pfrom, msgMaker.Make(nSendFlags, NetMsgType::TX, *txinfo.tx));
+                            push = true;
+                        }
+                     }
+                }
+
                 if (!push && inv.type == MSG_SPORK) {
-                    if(mapSporks.count(inv.hash)){
-						connman.PushMessage(pfrom,msgMaker.Make(SERIALIZE_TRANSACTION_NO_WITNESS, "spork", mapSporks[inv.hash]));
+                    if (mapSporks.count(inv.hash)){
+                        connman.PushMessage(pfrom,msgMaker.Make(SERIALIZE_TRANSACTION_NO_WITNESS, "spork", mapSporks[inv.hash]));
                         push = true;
                     }
                 }
+
                 if (!push && inv.type == MSG_MASTERNODE_WINNER) {
-                    if(mapSeenMasternodeVotes.count(inv.hash)){
-						connman.PushMessage(pfrom,msgMaker.Make(SERIALIZE_TRANSACTION_NO_WITNESS, "mnw", mapSeenMasternodeVotes[inv.hash]));//todo++
+                    if (mapSeenMasternodeVotes.count(inv.hash)){
+                        connman.PushMessage(pfrom,msgMaker.Make(SERIALIZE_TRANSACTION_NO_WITNESS, "mnw", mapSeenMasternodeVotes[inv.hash]));//todo++
                         push = true;
                     }
                 }
+
                 if (!push && inv.type == MSG_MASTERNODE_SCANNING_ERROR) {
-                    if(mapMasternodeScanningErrors.count(inv.hash)){
-						connman.PushMessage(pfrom,msgMaker.Make(SERIALIZE_TRANSACTION_NO_WITNESS, "mnse", mapMasternodeScanningErrors[inv.hash]));
+                    if (mapMasternodeScanningErrors.count(inv.hash)){
+                        connman.PushMessage(pfrom,msgMaker.Make(SERIALIZE_TRANSACTION_NO_WITNESS, "mnse", mapMasternodeScanningErrors[inv.hash]));
                         push = true;
                     }
                 }
@@ -1363,8 +1364,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         pfrom->SetSendVersion(nSendVersion);
         pfrom->nVersion = nVersion;
 
-        if((nServices & NODE_WITNESS))
-        {
+        if ((nServices & NODE_WITNESS)) {
             LOCK(cs_main);
             State(pfrom->GetId())->fHaveWitness = true;
         }
@@ -2647,7 +2647,6 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
     }
 
     else {
-		
         mnodeman.ProcessMessage(pfrom, strCommand, vRecv, connman);
         ProcessMessageMasternodePayments(pfrom, strCommand, vRecv, connman);
         ProcessSpork(pfrom, strCommand, vRecv, connman);

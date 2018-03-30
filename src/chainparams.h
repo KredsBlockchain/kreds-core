@@ -54,8 +54,7 @@ public:
         SECRET_KEY,
         EXT_PUBLIC_KEY,
         EXT_SECRET_KEY,
-		EXT_COIN_TYPE,  // BIP44//TODO--
-
+        EXT_COIN_TYPE,  // BIP44//TODO--
         MAX_BASE58_TYPES
     };
 
@@ -80,8 +79,10 @@ public:
     const std::vector<SeedSpec6>& FixedSeeds() const { return vFixedSeeds; }
     const CCheckpointData& Checkpoints() const { return checkpointData; }
     const ChainTxData& TxData() const { return chainTxData; }
-	/**TODO-- */
-	int PoolMaxTransactions() const { return nPoolMaxTransactions; }
+
+    /**TODO-- */
+    int PoolMaxTransactions() const { return nPoolMaxTransactions; }
+
     std::string SporkKey() const { return strSporkKey; }
     std::string DarksendPoolDummyAddress() const { return strDarksendPoolDummyAddress; }
     std::string MasternodePaymentPubKey() const { return strMasternodePaymentsPubKey; }
@@ -104,8 +105,10 @@ protected:
     bool fMineBlocksOnDemand;
     CCheckpointData checkpointData;
     ChainTxData chainTxData;
-	/**TODO-- */
-	int nPoolMaxTransactions;
+
+    /**TODO-- */
+    int nPoolMaxTransactions;
+
     std::string strSporkKey;
     std::string strMasternodePaymentsPubKey;
     std::string strDarksendPoolDummyAddress;

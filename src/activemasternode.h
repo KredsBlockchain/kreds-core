@@ -23,12 +23,12 @@ static const int MASTERNODEAMOUNT = 50000;
 class CActiveMasternode
 {
 public:
-	// Initialized by init.cpp
-	// Keys for the main Masternode
-	CPubKey pubKeyMasternode;
+    // Initialized by init.cpp
+    // Keys for the main Masternode
+    CPubKey pubKeyMasternode;
 
-	// Initialized while registering Masternode
-	CTxIn vin;
+    // Initialized while registering Masternode
+    CTxIn vin;
     CService service;
 
     int status;
@@ -64,7 +64,7 @@ public:
     bool GetMasterNodeVin(CTxIn& vin, CPubKey& pubkey, CKey& secretKey, std::string strTxHash, std::string strOutputIndex);
     //vector<COutput> SelectCoinsMasternode();
     bool GetVinFromOutput(COutput out, CTxIn& vin, CPubKey& pubkey, CKey& secretKey);
-	std::vector<COutput> SelectCoinsMasternode();//todo++
+    std::vector<COutput> SelectCoinsMasternode();//todo++
     /// Enable hot wallet mode (run a Masternode with no funds)
     bool EnableHotColdMasterNode(CTxIn& vin, CService& addr);
 };

@@ -250,9 +250,9 @@ public:
     int GetDepthInMainChain(const CBlockIndex* &pindexRet, bool enableIX = true) const;//TODO-- 
     int GetDepthInMainChain(bool enableIX = true) const { const CBlockIndex *pindexRet; return GetDepthInMainChain(pindexRet, enableIX); } //TODO--
     //int GetDepthInMainChain(/*bool enableIX = true*/) const { const CBlockIndex *pindexRet; return GetDepthInMainChain(pindexRet); }
-	bool IsInMainChain() const { const CBlockIndex *pindexRet; return GetDepthInMainChain(pindexRet) > 0; }
+    bool IsInMainChain() const { const CBlockIndex *pindexRet; return GetDepthInMainChain(pindexRet) > 0; }
     int GetBlocksToMaturity() const;
-	int GetTransactionLockSignatures() const;// TODO--
+    int GetTransactionLockSignatures() const;// TODO--
     bool IsTransactionLockTimedOut() const;// TODO--
     /** Pass this transaction to the mempool. Fails if absolute fee exceeds absurd fee. */
     bool AcceptToMemoryPool(const CAmount& nAbsurdFee, CValidationState& state/*, bool ignoreFees=false*/);//TODO--
@@ -293,7 +293,7 @@ public:
     mutable bool fCreditCached;
     mutable bool fImmatureCreditCached;
     mutable bool fAvailableCreditCached;
-	mutable bool fAnonymizableCreditCached;
+    mutable bool fAnonymizableCreditCached;
     mutable bool fAnonymizedCreditCached;
     mutable bool fDenomUnconfCreditCached;
     mutable bool fDenomConfCreditCached;
@@ -306,7 +306,7 @@ public:
     mutable CAmount nCreditCached;
     mutable CAmount nImmatureCreditCached;
     mutable CAmount nAvailableCreditCached;
-	mutable CAmount nAnonymizableCreditCached;
+    mutable CAmount nAnonymizableCreditCached;
     mutable CAmount nAnonymizedCreditCached;
     mutable CAmount nDenomUnconfCreditCached;
     mutable CAmount nDenomConfCreditCached;
@@ -340,7 +340,7 @@ public:
         fCreditCached = false;
         fImmatureCreditCached = false;
         fAvailableCreditCached = false;
-		fAnonymizableCreditCached = false;
+        fAnonymizableCreditCached = false;
         fAnonymizedCreditCached = false;
         fDenomUnconfCreditCached = false;
         fDenomConfCreditCached = false;
@@ -353,7 +353,7 @@ public:
         nCreditCached = 0;
         nImmatureCreditCached = 0;
         nAvailableCreditCached = 0;
-		nAnonymizableCreditCached = 0;
+        nAnonymizableCreditCached = 0;
         nAnonymizedCreditCached = 0;
         nDenomUnconfCreditCached = 0;
         nDenomConfCreditCached = 0;
@@ -414,7 +414,7 @@ public:
     {
         fCreditCached = false;
         fAvailableCreditCached = false;
-		fAnonymizableCreditCached = false;
+        fAnonymizableCreditCached = false;
         fAnonymizedCreditCached = false;
         fDenomUnconfCreditCached = false;
         fDenomConfCreditCached = false;
@@ -441,8 +441,8 @@ public:
     CAmount GetImmatureWatchOnlyCredit(const bool& fUseCache=true) const;
     CAmount GetAvailableWatchOnlyCredit(const bool& fUseCache=true) const;
     CAmount GetChange() const;
-	
-	CAmount GetAnonymizableCredit(bool fUseCache=true) const;
+
+    CAmount GetAnonymizableCredit(bool fUseCache=true) const;
     CAmount GetAnonymizedCredit(bool fUseCache=true) const;
     CAmount GetDenominatedCredit(bool unconfirmed, bool fUseCache=true) const;
 
@@ -488,8 +488,8 @@ public:
     {
         tx = txIn; i = iIn; nDepth = nDepthIn; fSpendable = fSpendableIn; fSolvable = fSolvableIn;
     }
-	
-	//Used with Darksend. Will return largest nondenom, then denominations, then very small inputs
+
+    // Used with Darksend. Will return largest nondenom, then denominations, then very small inputs
     int Priority() const;
 
     std::string ToString() const;
@@ -732,7 +732,7 @@ public:
         nLastResend = 0;
         nTimeFirstKey = 0;
         fBroadcastTransactions = false;
-		fWalletUnlockAnonymizeOnly = false;//TODO--
+        fWalletUnlockAnonymizeOnly = false;//TODO--
     }
 
     std::map<uint256, CWalletTx> mapWallet;
@@ -769,14 +769,14 @@ public:
      */
     bool SelectCoinsMinConf(const CAmount& nTargetValue, int nConfMine, int nConfTheirs, uint64_t nMaxAncestors, std::vector<COutput> vCoins, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, CAmount& nValueRet) const;
 
-	bool SelectCoinsDark(CAmount nValueMin, CAmount nValueMax, std::vector<CTxIn>& setCoinsRet, CAmount& nValueRet, int nDarksendRoundsMin, int nDarksendRoundsMax) const;
+    bool SelectCoinsDark(CAmount nValueMin, CAmount nValueMax, std::vector<CTxIn>& setCoinsRet, CAmount& nValueRet, int nDarksendRoundsMin, int nDarksendRoundsMax) const;
     bool SelectCoinsByDenominations(int nDenom, CAmount nValueMin, CAmount nValueMax, std::vector<CTxIn>& vCoinsRet, std::vector<COutput>& vCoinsRet2, CAmount& nValueRet, int nDarksendRoundsMin, int nDarksendRoundsMax);
     bool SelectCoinsDarkDenominated(CAmount nTargetValue, std::vector<CTxIn>& setCoinsRet, CAmount& nValueRet) const;
     bool HasCollateralInputs(bool fOnlyConfirmed = true) const;
     bool IsCollateralAmount(CAmount nInputAmount) const;
     int  CountInputsWithAmount(CAmount nInputAmount);
     bool SelectCoinsCollateral(std::vector<CTxIn>& setCoinsRet, CAmount& nValueRet) const ;
-	bool SelectCoinsWithoutDenomination(CAmount nTargetValue, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, CAmount& nValueRet) const;
+    bool SelectCoinsWithoutDenomination(CAmount nTargetValue, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, CAmount& nValueRet) const;
     CAmount GetTotalValue(std::vector<CTxIn> vCoins);
 
     // get the Darksend chain depth for a given input
@@ -790,8 +790,8 @@ public:
     bool IsDenominatedAmount(CAmount nInputAmount) const;
 
     bool IsSpent(const uint256& hash, unsigned int n) const;
-	
-	bool fWalletUnlockAnonymizeOnly;
+
+    bool fWalletUnlockAnonymizeOnly;
 
     bool IsLockedCoin(uint256 hash, unsigned int n) const;
     void LockCoin(const COutPoint& output);
@@ -867,13 +867,13 @@ public:
     CAmount GetWatchOnlyBalance() const;
     CAmount GetUnconfirmedWatchOnlyBalance() const;
     CAmount GetImmatureWatchOnlyBalance() const;
-	
-	CAmount GetAnonymizableBalance() const;// TODO--
+
+    CAmount GetAnonymizableBalance() const;// TODO--
     CAmount GetAnonymizedBalance() const;
     double GetAverageAnonymizedRounds() const;
     CAmount GetNormalizedAnonymizedBalance() const;
     //CAmount GetDenominatedBalance(bool unconfirmed=false) const;//new
-	CAmount GetDenominatedBalance(bool onlyDenom=true, bool onlyUnconfirmed=false) const;//old 
+    CAmount GetDenominatedBalance(bool onlyDenom=true, bool onlyUnconfirmed=false) const;//old 
 
    /* bool GetBudgetSystemCollateralTX(CTransaction& tx, uint256 hash, bool useIX);//New system but Chris disagree
     bool GetBudgetSystemCollateralTX(CWalletTx& tx, uint256 hash, bool useIX);*/ /**TODO-- */
@@ -894,8 +894,8 @@ public:
                            std::string& strFailReason, const CCoinControl *coinControl = NULL, bool sign = true, AvailableCoinsType coin_type=ALL_COINS, bool useIX=false);//TODO-- check
     bool CommitTransaction(CWalletTx& wtxNew, CReserveKey& reservekey, CConnman* connman, CValidationState& state, std::string strCommand="tx"); //std::string strCommand="tx" need it , but CConnman* connman
 
-	
-	std::string PrepareDarksendDenominate(int minRounds, int maxRounds);
+
+    std::string PrepareDarksendDenominate(int minRounds, int maxRounds);
     int GenerateDarksendOutputs(int nTotalValue, std::vector<CTxOut>& vout); //TODO--declared but not used
     bool CreateCollateralTransaction(CMutableTransaction& txCollateral, std::string& strReason);
     bool ConvertList(std::vector<CTxIn> vCoins, std::vector<CAmount>& vecAmounts);
@@ -970,8 +970,8 @@ public:
 
     bool UpdatedTransaction(const uint256 &hashTx) override;//bool UpdatedTransaction(const uint256 &hashTx) override;//TODO--
 
-	//bool UpdatedTransaction(const uint256 &hashTx) override;//TODO-- remove
-	
+    //bool UpdatedTransaction(const uint256 &hashTx) override;//TODO-- remove
+
     void Inventory(const uint256 &hash) override
     {
         {

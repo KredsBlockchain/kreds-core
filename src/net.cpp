@@ -449,7 +449,7 @@ void CConnman::ClearBanned()
         setBannedIsDirty = true;
     }
     DumpBanlist(); //store banlist to disk
-    if(clientInterface)
+    if (clientInterface)
         clientInterface->BannedListChanged();
 }
 
@@ -463,7 +463,7 @@ bool CConnman::IsBanned(CNetAddr ip)
             CSubNet subNet = (*it).first;
             CBanEntry banEntry = (*it).second;
 
-            if(subNet.Match(ip) && GetTime() < banEntry.nBanUntil)
+            if (subNet.Match(ip) && GetTime() < banEntry.nBanUntil)
                 fResult = true;
         }
     }
@@ -510,8 +510,9 @@ void CConnman::Ban(const CSubNet& subNet, const BanReason &banReason, int64_t ba
         else
             return;
     }
-    if(clientInterface)
+    if (clientInterface)
         clientInterface->BannedListChanged();
+    // Lobos: why is there a block here?
     {
         LOCK(cs_vNodes);
         BOOST_FOREACH(CNode* pnode, vNodes) {
@@ -519,7 +520,7 @@ void CConnman::Ban(const CSubNet& subNet, const BanReason &banReason, int64_t ba
                 pnode->fDisconnect = true;
         }
     }
-    if(banReason == BanReasonManuallyAdded)
+    if (banReason == BanReasonManuallyAdded)
         DumpBanlist(); //store banlist to disk immediately if user requested ban
 }
 

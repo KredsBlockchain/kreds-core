@@ -368,7 +368,6 @@ static const CRPCCommand vRPCCommands[] =
     { "wallet",             "walletlock",             &walletlock,             true,      false,      true },
     { "wallet",             "walletpassphrasechange", &walletpassphrasechange, true,      false,      true },
     { "wallet",             "walletpassphrase",       &walletpassphrase,       true,      false,      true },
-	
 #endif // ENABLE_WALLET
 };
 
@@ -572,7 +571,7 @@ static ip::tcp::endpoint ParseEndpoint(const std::string &strEndpoint, int defau
 
 void StartRPCThreads()
 {
-	rpc_allow_subnets.clear();
+    rpc_allow_subnets.clear();
     rpc_allow_subnets.push_back(CSubNet("127.0.0.0/8")); // always allow IPv4 local subnet
     rpc_allow_subnets.push_back(CSubNet("::1")); // always allow IPv6 localhost
     if (mapMultiArgs.count("-rpcallowip"))
@@ -596,14 +595,14 @@ void StartRPCThreads()
     BOOST_FOREACH(const CSubNet &subnet, rpc_allow_subnets)
         strAllowed += subnet.ToString() + " ";
     LogPrint("rpc", "Allowing RPC connections from: %s\n", strAllowed);
-	
+
     strRPCUserColonPass = mapArgs["-rpcuser"] + ":" + mapArgs["-rpcpassword"];
     if (((mapArgs["-rpcpassword"] == "") ||
          (mapArgs["-rpcuser"] == mapArgs["-rpcpassword"])) && Params().RequireRPCPassword())
     {
         unsigned char rand_pwd[32];
         GetRandBytes(rand_pwd, 32);
-		
+
         uiInterface.ThreadSafeMessageBox(strprintf(
             _("To use bsddeamon, or the -server option to kreds-qt, you must set an rpcpassword in the configuration file:\n"
               "%s\n"
@@ -652,8 +651,8 @@ void StartRPCThreads()
     asio::ip::address bindAddress = loopback ? asio::ip::address_v6::loopback() : asio::ip::address_v6::any();
     ip::tcp::endpoint endpoint(bindAddress, GetArg("-rpcport", Params().RPCPort()));
     boost::system::error_code v6_only_error;*/
-	
-	std::vector<ip::tcp::endpoint> vEndpoints;
+
+    std::vector<ip::tcp::endpoint> vEndpoints;
     bool bBindAny = false;
     int defaultPort = GetArg("-rpcport", BaseParams().RPCPort());
     if (!mapArgs.count("-rpcallowip")) // Default to loopback if not allowing external IPs
@@ -747,15 +746,15 @@ void StartDummyRPCThread()
         rpc_dummy_work = new asio::io_service::work(*rpc_io_service);
         rpc_worker_group = new boost::thread_group();
         rpc_worker_group->create_thread(boost::bind(&asio::io_service::run, rpc_io_service));
-		fRPCRunning = true;
+        fRPCRunning = true;
     }
 }
 
 void StopRPCThreads()
 {
     if (rpc_io_service == NULL) return;
-	
-	// Set this to false first, so that longpolling loops will exit when woken up
+
+    // Set this to false first, so that longpolling loops will exit when woken up
     fRPCRunning = false;
 
     // First, cancel all timers and acceptors
@@ -778,9 +777,11 @@ void StopRPCThreads()
     deadlineTimers.clear();
 
     rpc_io_service->stop();
-	cvBlockChange.notify_all();
+    cvBlockChange.notify_all();
+
     if (rpc_worker_group != NULL)
         rpc_worker_group->join_all();
+
     delete rpc_dummy_work; rpc_dummy_work = NULL;
     delete rpc_worker_group; rpc_worker_group = NULL;
     delete rpc_ssl_context; rpc_ssl_context = NULL;

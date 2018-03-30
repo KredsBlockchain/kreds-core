@@ -65,9 +65,9 @@ void WalletTxToJSON(const CWalletTx& wtx, UniValue& entry)
     int confirms = wtx.GetDepthInMainChain(false); //TODO--
     //int confirmsTotal = GetIXConfirmations(wtx.GetHash()) + confirms;
     //entry.push_back(Pair("confirmations", confirmsTotal));
-	entry.push_back(Pair("confirmations", confirms));
+    entry.push_back(Pair("confirmations", confirms));
     entry.push_back(Pair("bcconfirmations", confirms));
-	
+
     if (wtx.IsCoinBase())
         entry.push_back(Pair("generated", true));
     if (confirms > 0)
@@ -370,8 +370,7 @@ static void SendMoney(const CTxDestination &address, CAmount nValue, bool fSubtr
     int nChangePosRet = -1;
     CRecipient recipient = {scriptPubKey, nValue, fSubtractFeeFromAmount};
     vecSend.push_back(recipient);
-    if (!pwalletMain->CreateTransaction(vecSend, wtxNew, reservekey, nFeeRequired, nChangePosRet,
-									    strError, NULL, true, fUseDS ? ONLY_DENOMINATED : ALL_COINS, fUseIX)) {//TODO--
+    if (!pwalletMain->CreateTransaction(vecSend, wtxNew, reservekey, nFeeRequired, nChangePosRet, strError, NULL, true, fUseDS ? ONLY_DENOMINATED : ALL_COINS, fUseIX)) {//TODO--
         if (!fSubtractFeeFromAmount && nValue + nFeeRequired > curBalance)
             strError = strprintf("Error: This transaction requires a transaction fee of at least %s", FormatMoney(nFeeRequired));
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
@@ -403,7 +402,7 @@ UniValue sendtoaddress(const JSONRPCRequest& request)
             "                             transaction, just kept in your wallet.\n"
             "5. subtractfeefromamount  (boolean, optional, default=false) The fee will be deducted from the amount being sent.\n"
             "                             The recipient will receive less kredss than you enter in the amount field.\n"
-			"6. \"use_ix\"      (bool, optional) Send this transaction as IX (default: false)\n"
+            "6. \"use_ix\"      (bool, optional) Send this transaction as IX (default: false)\n"
             "7. \"use_ds\"      (bool, optional) Use anonymized funds only (default: false)\n"
             "\nResult:\n"
             "\"txid\"                  (string) The transaction id.\n"
@@ -435,7 +434,7 @@ UniValue sendtoaddress(const JSONRPCRequest& request)
     bool fSubtractFeeFromAmount = false;
     if (request.params.size() > 4)
         fSubtractFeeFromAmount = request.params[4].get_bool();
-	
+
     bool fUseIX = false; //TODO--
     bool fUseDS = false;
     if (request.params.size() > 5)
@@ -779,8 +778,8 @@ UniValue getbalance(const JSONRPCRequest& request)
     if (request.params.size() > 1)
         nMinDepth = request.params[1].get_int();
     isminefilter filter = ISMINE_SPENDABLE;
-    if(request.params.size() > 2)
-        if(request.params[2].get_bool())
+    if (request.params.size() > 2)
+        if (request.params[2].get_bool())
             filter = filter | ISMINE_WATCH_ONLY;
 
     if (request.params[0].get_str() == "*") {
@@ -907,7 +906,7 @@ UniValue sendfrom(const JSONRPCRequest& request)
             "6. \"comment_to\"        (string, optional) An optional comment to store the name of the person or organization \n"
             "                                     to which you're sending the transaction. This is not part of the transaction, \n"
             "                                     it is just kept in your wallet.\n"
-			"7. \"use_ix\"      (bool, optional) Send this transaction as IX (default: false)\n"
+            "7. \"use_ix\"      (bool, optional) Send this transaction as IX (default: false)\n"
             "8. \"use_ds\"      (bool, optional) Use anonymized funds only (default: false)\n"
             "\nResult:\n"
             "\"txid\"                 (string) The transaction id.\n"
@@ -1058,16 +1057,16 @@ UniValue sendmany(const JSONRPCRequest& request)
     CAmount nFeeRequired = 0;
     int nChangePosRet = -1;
     string strFailReason;
-	//TODO--
-	bool fUseIX = false;
+    //TODO--
+    bool fUseIX = false;
     bool fUseDS = false;
     if (request.params.size() > 5)
         fUseIX = request.params[5].get_bool();
     if (request.params.size() > 6)
         fUseDS = request.params[6].get_bool();
-	//TODO--
+    //TODO--
     bool fCreated = pwalletMain->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired, nChangePosRet, strFailReason,
-	                                               NULL, true, fUseDS ? ONLY_DENOMINATED : ALL_COINS, fUseIX);
+                                                   NULL, true, fUseDS ? ONLY_DENOMINATED : ALL_COINS, fUseIX);
     if (!fCreated)
         throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, strFailReason);
     CValidationState state;
@@ -1223,14 +1222,14 @@ struct tallyitem
 {
     CAmount nAmount;
     int nConf;
-	int nBCConf;//TODO--
+    int nBCConf;//TODO--
     vector<uint256> txids;
     bool fIsWatchonly;
     tallyitem()
     {
         nAmount = 0;
         nConf = std::numeric_limits<int>::max();
-		nBCConf = std::numeric_limits<int>::max();//TODO--
+        nBCConf = std::numeric_limits<int>::max();//TODO--
         fIsWatchonly = false;
     }
 };
@@ -1248,8 +1247,8 @@ UniValue ListReceived(const UniValue& params, bool fByAccounts)
         fIncludeEmpty = params[1].get_bool();
 
     isminefilter filter = ISMINE_SPENDABLE;
-    if(params.size() > 2)
-        if(params[2].get_bool())
+    if (params.size() > 2)
+        if (params[2].get_bool())
             filter = filter | ISMINE_WATCH_ONLY;
 
     // Tally
@@ -1262,7 +1261,7 @@ UniValue ListReceived(const UniValue& params, bool fByAccounts)
             continue;
 
         int nDepth = wtx.GetDepthInMainChain();
-		int nBCDepth = wtx.GetDepthInMainChain(false); //TODO--
+        int nBCDepth = wtx.GetDepthInMainChain(false); //TODO--
         if (nDepth < nMinDepth)
             continue;
 
@@ -1273,13 +1272,13 @@ UniValue ListReceived(const UniValue& params, bool fByAccounts)
                 continue;
 
             isminefilter mine = IsMine(*pwalletMain, address);
-            if(!(mine & filter))
+            if (!(mine & filter))
                 continue;
 
             tallyitem& item = mapTally[address];
             item.nAmount += txout.nValue;
             item.nConf = min(item.nConf, nDepth);
-			item.nBCConf = min(item.nBCConf, nBCDepth);//TODO--
+            item.nBCConf = min(item.nBCConf, nBCDepth);//TODO--
             item.txids.push_back(wtx.GetHash());
             if (mine & ISMINE_WATCH_ONLY)
                 item.fIsWatchonly = true;
@@ -1299,13 +1298,13 @@ UniValue ListReceived(const UniValue& params, bool fByAccounts)
 
         CAmount nAmount = 0;
         int nConf = std::numeric_limits<int>::max();
-		int nBCConf = std::numeric_limits<int>::max();//TODO--
+        int nBCConf = std::numeric_limits<int>::max();//TODO--
         bool fIsWatchonly = false;
         if (it != mapTally.end())
         {
             nAmount = (*it).second.nAmount;
             nConf = (*it).second.nConf;
-			nBCConf = (*it).second.nBCConf;//TODO
+            nBCConf = (*it).second.nBCConf;//TODO
             fIsWatchonly = (*it).second.fIsWatchonly;
         }
 
@@ -1314,19 +1313,19 @@ UniValue ListReceived(const UniValue& params, bool fByAccounts)
             tallyitem& _item = mapAccountTally[strAccount];
             _item.nAmount += nAmount;
             _item.nConf = min(_item.nConf, nConf);
-			//_item.nBCConf = min(item.nBCConf, nBCConf);//TODO-- 
+            //_item.nBCConf = min(item.nBCConf, nBCConf);//TODO-- 
             _item.fIsWatchonly = fIsWatchonly;
         }
         else
         {
             UniValue obj(UniValue::VOBJ);
-            if(fIsWatchonly)
+            if (fIsWatchonly)
                 obj.push_back(Pair("involvesWatchonly", true));
             obj.push_back(Pair("address",       address.ToString()));
             obj.push_back(Pair("account",       strAccount));
             obj.push_back(Pair("amount",        ValueFromAmount(nAmount)));
             obj.push_back(Pair("confirmations", (nConf == std::numeric_limits<int>::max() ? 0 : nConf)));
-			obj.push_back(Pair("bcconfirmations", (nBCConf == std::numeric_limits<int>::max() ? 0 : nBCConf)));//TODO--
+            obj.push_back(Pair("bcconfirmations", (nBCConf == std::numeric_limits<int>::max() ? 0 : nBCConf)));//TODO--
             if (!fByAccounts)
                 obj.push_back(Pair("label", strAccount));
             UniValue transactions(UniValue::VARR);
@@ -1348,14 +1347,14 @@ UniValue ListReceived(const UniValue& params, bool fByAccounts)
         {
             CAmount nAmount = (*it).second.nAmount;
             int nConf = (*it).second.nConf;
-			int nBCConf = (*it).second.nBCConf;//TODO--
+            int nBCConf = (*it).second.nBCConf;//TODO--
             UniValue obj(UniValue::VOBJ);
-            if((*it).second.fIsWatchonly)
+            if ((*it).second.fIsWatchonly)
                 obj.push_back(Pair("involvesWatchonly", true));
             obj.push_back(Pair("account",       (*it).first));
             obj.push_back(Pair("amount",        ValueFromAmount(nAmount)));
             obj.push_back(Pair("confirmations", (nConf == std::numeric_limits<int>::max() ? 0 : nConf)));
-			obj.push_back(Pair("bcconfirmations", (nBCConf == std::numeric_limits<int>::max() ? 0 : nBCConf)));//TODO--
+            obj.push_back(Pair("bcconfirmations", (nBCConf == std::numeric_limits<int>::max() ? 0 : nBCConf)));//TODO--
             ret.push_back(obj);
         }
     }
@@ -1385,7 +1384,7 @@ UniValue listreceivedbyaddress(const JSONRPCRequest& request)
             "    \"account\" : \"accountname\",       (string) DEPRECATED. The account of the receiving address. The default account is \"\".\n"
             "    \"amount\" : x.xxx,                  (numeric) The total amount in " + CURRENCY_UNIT + " received by the address\n"
             "    \"confirmations\" : n,               (numeric) The number of confirmations of the most recent transaction included\n"
-			"    \"bcconfirmations\" : n              (numeric) The number of blockchain confirmations of the most recent transaction included\n"
+            "    \"bcconfirmations\" : n              (numeric) The number of blockchain confirmations of the most recent transaction included\n"
             "    \"label\" : \"label\",               (string) A comment for the address/transaction, if any\n"
             "    \"txids\": [\n"
             "       n,                                (numeric) The ids of transactions received with the address \n"
@@ -1427,7 +1426,7 @@ UniValue listreceivedbyaccount(const JSONRPCRequest& request)
             "    \"account\" : \"accountname\",  (string) The account name of the receiving account\n"
             "    \"amount\" : x.xxx,             (numeric) The total amount received by addresses with this account\n"
             "    \"confirmations\" : n,          (numeric) The number of confirmations of the most recent transaction included\n"
-			"    \"bcconfirmations\" : n         (numeric) The number of blockchain confirmations of the most recent transaction included\n"
+            "    \"bcconfirmations\" : n         (numeric) The number of blockchain confirmations of the most recent transaction included\n"
             "    \"label\" : \"label\"           (string) A comment for the address/transaction, if any\n"
             "  }\n"
             "  ,...\n"
@@ -1469,13 +1468,13 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
         BOOST_FOREACH(const COutputEntry& s, listSent)
         {
             UniValue entry(UniValue::VOBJ);
-            if(involvesWatchonly || (::IsMine(*pwalletMain, s.destination) & ISMINE_WATCH_ONLY))
+            if (involvesWatchonly || (::IsMine(*pwalletMain, s.destination) & ISMINE_WATCH_ONLY))
                 entry.push_back(Pair("involvesWatchonly", true));
             entry.push_back(Pair("account", strSentAccount));
             MaybePushAddress(entry, s.destination);
             entry.push_back(Pair("category", "send"));//TODO--
-			//TODO--
-			std::map<std::string, std::string>::const_iterator it = wtx.mapValue.find("DS");
+            //TODO--
+            std::map<std::string, std::string>::const_iterator it = wtx.mapValue.find("DS");
             entry.push_back(Pair("category", (it != wtx.mapValue.end() && it->second == "1") ? "darksent" : "send"));
             entry.push_back(Pair("amount", ValueFromAmount(-s.amount)));
             if (pwalletMain->mapAddressBook.count(s.destination))
@@ -1500,7 +1499,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
             if (fAllAccounts || (account == strAccount))
             {
                 UniValue entry(UniValue::VOBJ);
-                if(involvesWatchonly || (::IsMine(*pwalletMain, r.destination) & ISMINE_WATCH_ONLY))
+                if (involvesWatchonly || (::IsMine(*pwalletMain, r.destination) & ISMINE_WATCH_ONLY))
                     entry.push_back(Pair("involvesWatchonly", true));
                 entry.push_back(Pair("account", account));
                 MaybePushAddress(entry, r.destination);
@@ -1581,7 +1580,7 @@ UniValue listtransactions(const JSONRPCRequest& request)
             "    \"confirmations\": n,       (numeric) The number of confirmations for the transaction. Available for 'send' and \n"
             "                                         'receive' category of transactions. Negative confirmations indicate the\n"
             "                                         transaction conflicts with the block chain\n"
-			"    \"bcconfirmations\": n,     (numeric) The number of blockchain confirmations for the transaction. Available for 'send' and \n"
+            "    \"bcconfirmations\": n,     (numeric) The number of blockchain confirmations for the transaction. Available for 'send' and \n"
             "                                         'receive' category of transactions. Negative confirmations indicate the\n"
             "                                         transation conflicts with the block chain\n"
             "    \"trusted\": xxx,           (bool) Whether we consider the outputs of this unconfirmed transaction safe to spend.\n"
@@ -1626,8 +1625,8 @@ UniValue listtransactions(const JSONRPCRequest& request)
     if (request.params.size() > 2)
         nFrom = request.params[2].get_int();
     isminefilter filter = ISMINE_SPENDABLE;
-    if(request.params.size() > 3)
-        if(request.params[3].get_bool())
+    if (request.params.size() > 3)
+        if (request.params[3].get_bool())
             filter = filter | ISMINE_WATCH_ONLY;
 
     if (nCount < 0)
@@ -1711,8 +1710,8 @@ UniValue listaccounts(const JSONRPCRequest& request)
     if (request.params.size() > 0)
         nMinDepth = request.params[0].get_int();
     isminefilter includeWatchonly = ISMINE_SPENDABLE;
-    if(request.params.size() > 1)
-        if(request.params[1].get_bool())
+    if (request.params.size() > 1)
+        if (request.params[1].get_bool())
             includeWatchonly = includeWatchonly | ISMINE_WATCH_ONLY;
 
     map<string, CAmount> mapAccountBalances;
@@ -1781,7 +1780,7 @@ UniValue listsinceblock(const JSONRPCRequest& request)
             "    \"fee\": x.xxx,             (numeric) The amount of the fee in " + CURRENCY_UNIT + ". This is negative and only available for the 'send' category of transactions.\n"
             "    \"confirmations\": n,       (numeric) The number of confirmations for the transaction. Available for 'send' and 'receive' category of transactions.\n"
             "                                          When it's < 0, it means the transaction conflicted that many blocks ago.\n"
-			"    \"bcconfirmations\" : n,    (numeric) The number of blockchain confirmations for the transaction. Available for 'send' and 'receive' category of transactions.\n"
+            "    \"bcconfirmations\" : n,    (numeric) The number of blockchain confirmations for the transaction. Available for 'send' and 'receive' category of transactions.\n"
             "    \"blockhash\": \"hashvalue\",     (string) The block hash containing the transaction. Available for 'send' and 'receive' category of transactions.\n"
             "    \"blockindex\": n,          (numeric) The index of the transaction in the block that includes it. Available for 'send' and 'receive' category of transactions.\n"
             "    \"blocktime\": xxx,         (numeric) The block time in seconds since epoch (1 Jan 1970 GMT).\n"
@@ -1881,7 +1880,7 @@ UniValue gettransaction(const JSONRPCRequest& request)
             "  \"fee\": x.xxx,            (numeric) The amount of the fee in " + CURRENCY_UNIT + ". This is negative and only available for the \n"
             "                              'send' category of transactions.\n"
             "  \"confirmations\" : n,     (numeric) The number of confirmations\n"
-			"  \"bcconfirmations\" : n,   (numeric) The number of blockchain confirmations\n"
+            "  \"bcconfirmations\" : n,   (numeric) The number of blockchain confirmations\n"
             "  \"blockhash\" : \"hash\",  (string) The block hash\n"
             "  \"blockindex\" : xx,       (numeric) The index of the transaction in the block that includes it\n"
             "  \"blocktime\" : ttt,       (numeric) The time in seconds since epoch (1 Jan 1970 GMT)\n"
@@ -1901,7 +1900,7 @@ UniValue gettransaction(const JSONRPCRequest& request)
             "      \"fee\": x.xxx,                     (numeric) The amount of the fee in " + CURRENCY_UNIT + ". This is negative and only available for the \n"
             "                                           'send' category of transactions.\n"
             "      \"abandoned\": xxx                  (bool) 'true' if the transaction has been abandoned (inputs are respendable). Only available for the \n"
-            "                                           'send' category of transactions.\n"			
+            "                                           'send' category of transactions.\n"
             "    }\n"
             "    ,...\n"
             "  ],\n"
@@ -1920,8 +1919,8 @@ UniValue gettransaction(const JSONRPCRequest& request)
     hash.SetHex(request.params[0].get_str());
 
     isminefilter filter = ISMINE_SPENDABLE;
-    if(request.params.size() > 1)
-        if(request.params[1].get_bool())
+    if (request.params.size() > 1)
+        if (request.params[1].get_bool())
             filter = filter | ISMINE_WATCH_ONLY;
 
     UniValue entry(UniValue::VOBJ);
@@ -2068,14 +2067,14 @@ UniValue walletpassphrase(const JSONRPCRequest& request)
             "\nArguments:\n"
             "1. \"passphrase\"     (string, required) The wallet passphrase\n"
             "2. timeout            (numeric, required) The time to keep the decryption key in seconds.\n"
-			"3. anonymizeonly      (boolean, optional, default=flase) If is true sending functions are disabled."
+            "3. anonymizeonly      (boolean, optional, default=flase) If is true sending functions are disabled."
             "\nNote:\n"
             "Issuing the walletpassphrase command while the wallet is already unlocked will set a new unlock\n"
             "time that overrides the old one.\n"
             "\nExamples:\n"
             "\nunlock the wallet for 60 seconds\n"
             + HelpExampleCli("walletpassphrase", "\"my pass phrase\" 60") +
-			"\nUnlock the wallet for 60 seconds but allow Darksend mixing only\n"
+            "\nUnlock the wallet for 60 seconds but allow Darksend mixing only\n"
             + HelpExampleCli("walletpassphrase", "\"my pass phrase\" 60 true") +
             "\nLock the wallet again (before 60 seconds)\n"
             + HelpExampleCli("walletlock", "") +
@@ -2096,8 +2095,8 @@ UniValue walletpassphrase(const JSONRPCRequest& request)
     // TODO: get rid of this .c_str() by implementing SecureString::operator=(std::string)
     // Alternately, find a way to make request.params[0] mlock()'d to begin with.
     strWalletPass = request.params[0].get_str().c_str();
-	
-	/**TODO-- */
+
+    /**TODO-- */
     bool anonymizeOnly = false;
     if (request.params.size() == 3)
         anonymizeOnly = request.params[2].get_bool();
@@ -2495,7 +2494,7 @@ UniValue getwalletinfo(const JSONRPCRequest& request)
         result += sKey;
         return result.c_str();
     }
-    else if(strCommand == "init")
+    else if (strCommand == "init")
     {
         // Generate base64 encoded 256 bit RSA key and associate with KeePassHttp
         SecureString result;
@@ -2509,9 +2508,9 @@ UniValue getwalletinfo(const JSONRPCRequest& request)
         result += sKey.c_str();
         return result.c_str();
     }
-    else if(strCommand == "setpassphrase")
+    else if (strCommand == "setpassphrase")
     {
-        if(params.size() != 2) {
+        if (params.size() != 2) {
             return "setlogin: invalid number of parameters. Requires a passphrase";
         }
 
@@ -2823,7 +2822,7 @@ UniValue fundrawtransaction(const JSONRPCRequest& request)
     CAmount nFeeOut;
     string strFailReason;
 
-    if(!pwalletMain->FundTransaction(tx, nFeeOut, overrideEstimatedFeerate, feeRate, changePosition, strFailReason, includeWatching, lockUnspents, setSubtractFeeFromOutputs, reserveChangeKey, changeAddress))
+    if (!pwalletMain->FundTransaction(tx, nFeeOut, overrideEstimatedFeerate, feeRate, changePosition, strFailReason, includeWatching, lockUnspents, setSubtractFeeFromOutputs, reserveChangeKey, changeAddress))
         throw JSONRPCError(RPC_INTERNAL_ERROR, strFailReason);
 
     UniValue result(UniValue::VOBJ);

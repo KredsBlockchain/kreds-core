@@ -19,17 +19,16 @@ const struct BIP9DeploymentInfo VersionBitsDeploymentInfo[Consensus::MAX_VERSION
 
 ThresholdState AbstractThresholdConditionChecker::GetStateFor(const CBlockIndex* pindexPrev, const Consensus::Params& params, ThresholdConditionCache& cache) const
 {
-	int nPeriod = Period(params);
+    int nPeriod = Period(params);
     int nThreshold = Threshold(params);
     int64_t nTimeStart = BeginTime(params);
     int64_t nTimeTimeout = EndTime(params);
-	int64_t nThresholdHeight = Height(params);
-	
-	int64_t nHeight = 0;
+    int64_t nThresholdHeight = Height(params);
+    int64_t nHeight = 0;
 
     // A block's state is always the same as that of the first of its period, so it is computed based on a pindexPrev whose height equals a multiple of nPeriod - 1.
     if (pindexPrev != NULL) {
-		nHeight = pindexPrev->nHeight;
+        nHeight = pindexPrev->nHeight;
         pindexPrev = pindexPrev->GetAncestor(pindexPrev->nHeight - ((pindexPrev->nHeight + 1) % nPeriod));
     }
 

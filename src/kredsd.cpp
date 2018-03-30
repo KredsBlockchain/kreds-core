@@ -119,47 +119,50 @@ bool AppInit(int argc, char* argv[])
             fprintf(stderr, "Error: %s\n", e.what());
             return false;
         }
-		/**TODO-- */
-		// parse masternode.conf
+
+        /**TODO-- */
+        // parse masternode.conf
         std::string strErr;
-        if(!masternodeConfig.read(strErr)) {
+        if (!masternodeConfig.read(strErr)) {
             fprintf(stderr,"Error reading masternode configuration file: %s\n", strErr.c_str());
             return false;
         }
 
         // Command-line RPC
         bool fCommandLine = false;
-        for (int i = 1; i < argc; i++)
-            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "kreds:"))
+        for (int i = 1; i < argc; i++) {
+            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "kreds:")) {
                 fCommandLine = true;
+            }
+        }
 
-        if (fCommandLine)
-        {
+        if (fCommandLine) {
             fprintf(stderr, "Error: There is no RPC client functionality in kredsd anymore. Use the kreds-cli utility instead.\n");
             exit(EXIT_FAILURE);
         }
+
         // -server defaults to true for kredsd but not for the GUI so do this here
         SoftSetBoolArg("-server", true);
         // Set this early so that parameter interactions go to console
         InitLogging();
         InitParameterInteraction();
-        if (!AppInitBasicSetup())
-        {
+
+        if (!AppInitBasicSetup()) {
             // InitError will have been called with detailed error, which ends up on console
             exit(1);
         }
-        if (!AppInitParameterInteraction())
-        {
+
+        if (!AppInitParameterInteraction()) {
             // InitError will have been called with detailed error, which ends up on console
             exit(1);
         }
-        if (!AppInitSanityChecks())
-        {
+
+        if (!AppInitSanityChecks()) {
             // InitError will have been called with detailed error, which ends up on console
             exit(1);
         }
-        if (GetBoolArg("-daemon", false))
-        {
+
+        if (GetBoolArg("-daemon", false)) {
 #if HAVE_DECL_DAEMON
             fprintf(stdout, "kreds server starting\n");
 
@@ -182,8 +185,7 @@ bool AppInit(int argc, char* argv[])
         PrintExceptionContinue(NULL, "AppInit()");
     }
 
-    if (!fRet)
-    {
+    if (!fRet) {
         Interrupt(threadGroup);
         // threadGroup.join_all(); was left out intentionally here, because we didn't re-test all of
         // the startup-failure cases to make sure they don't result in a hang due to some

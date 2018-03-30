@@ -229,7 +229,7 @@ void PrepareShutdown() //TODO--
         pwalletMain->Flush(false);
 #endif
     MapPort(false);
-	DumpMasternodes();// TODO--
+    DumpMasternodes();// TODO--
     //DumpBudgets();// TODO--
     //DumpMasternodePayments();// TODO--
     UnregisterValidationInterface(peerLogic.get());
@@ -287,7 +287,7 @@ void PrepareShutdown() //TODO--
     }
 #endif
     UnregisterAllValidationInterfaces();
-	/**TODO-- */
+    /**TODO-- */
 }
 /*TODO-- */
 /**
@@ -302,12 +302,12 @@ void PrepareShutdown() //TODO--
 void Shutdown()
 {
     // Shutdown part 1: prepare shutdown
-    if(!fRestartRequested){
+    if (!fRestartRequested) {
         PrepareShutdown();
     }
 
    // Shutdown part 2: delete wallet instance
-	
+
 #ifdef ENABLE_WALLET
     delete pwalletMain;
     pwalletMain = NULL;
@@ -453,8 +453,9 @@ std::string HelpMessage(HelpMessageMode mode)
 
 #ifdef ENABLE_WALLET
     strUsage += CWallet::GetWalletHelpString(showDebug);
-	/**TODO-- */
-	strUsage += HelpMessageOpt("-createwalletbackups=<n>", _("Number of automatic wallet backups (default: 10)"));
+
+    /**TODO-- */
+    strUsage += HelpMessageOpt("-createwalletbackups=<n>", _("Number of automatic wallet backups (default: 10)"));
     strUsage += HelpMessageOpt("-keepass", strprintf(_("Use KeePass 2 integration using KeePassHttp plugin (default: %u)"), 0));
     strUsage += HelpMessageOpt("-keepassport=<port>", strprintf(_("Connect to KeePassHttp on port <port> (default: %u)"), 19455));
     strUsage += HelpMessageOpt("-keepasskey=<key>", _("KeePassHttp key for AES encrypted communication with KeePass"));
@@ -492,7 +493,7 @@ std::string HelpMessage(HelpMessageMode mode)
         strUsage += HelpMessageOpt("-limitdescendantsize=<n>", strprintf("Do not accept transactions if any ancestor would have more than <n> kilobytes of in-mempool descendants (default: %u).", DEFAULT_DESCENDANT_SIZE_LIMIT));
         strUsage += HelpMessageOpt("-bip9params=deployment:start:end", "Use given start/end times for specified BIP9 deployment (regtest-only)");
     }
-	/**TODO-- */
+    /**TODO-- */
     std::string debugCategories = "addrman, alert, bench, coindb, db, lock, rand, rpc, selectcoins, mempool, mempoolrej, net, proxy, prune, http, libevent, tor, zmq, "
                              "dash (or specifically: darksend, instantx, masternode, keepass, mnpayments, mnbudget)"; // Don't translate these and qt below
     if (mode == HMM_KREDS_QT)
@@ -518,7 +519,7 @@ std::string HelpMessage(HelpMessageMode mode)
     strUsage += HelpMessageOpt("-maxtxfee=<amt>", strprintf(_("Maximum total fees (in %s) to use in a single wallet transaction or raw transaction; setting this too low may abort large transactions (default: %s)"),
         CURRENCY_UNIT, FormatMoney(DEFAULT_TRANSACTION_MAXFEE)));
     strUsage += HelpMessageOpt("-printtoconsole", _("Send trace/debug info to console instead of debug.log file"));
-	strUsage += HelpMessageOpt("-printtodebuglog", strprintf(_("Send trace/debug info to debug.log file (default: %u)"), 1));//TODO--
+    strUsage += HelpMessageOpt("-printtodebuglog", strprintf(_("Send trace/debug info to debug.log file (default: %u)"), 1));//TODO--
     if (showDebug)
     {
         strUsage += HelpMessageOpt("-printpriority", strprintf("Log transaction priority and fee per kB when mining blocks (default: %u)", DEFAULT_PRINTPRIORITY));
@@ -526,9 +527,9 @@ std::string HelpMessage(HelpMessageMode mode)
     strUsage += HelpMessageOpt("-shrinkdebugfile", _("Shrink debug.log file on client startup (default: 1 when no -debug)"));
 
     AppendParamsHelpMessages(strUsage, showDebug);
-	
-	/**TODO-- */
-	strUsage += HelpMessageOpt("-litemode=<n>", strprintf(_("Disable all Dash specific functionality (Masternodes, Darksend, InstantX, Budgeting) (0-1, default: %u)"), 0));
+
+    /**TODO-- */
+    strUsage += HelpMessageOpt("-litemode=<n>", strprintf(_("Disable all Dash specific functionality (Masternodes, Darksend, InstantX, Budgeting) (0-1, default: %u)"), 0));
 
     strUsage += HelpMessageGroup(_("Masternode options:"));
     strUsage += HelpMessageOpt("-masternode=<n>", strprintf(_("Enable the client to act as a masternode (0-1, default: %u)"), 0));
@@ -593,9 +594,9 @@ std::string LicenseInfo()
     const std::string URL_SOURCE_CODE = "<https://github.com/KredsBlockchain/kreds-core>";
     const std::string URL_WEBSITE = "<https://kredsblockchain.com>";
 
-	//TODO-- add kreds license
+    //TODO-- add kreds license
     return FormatParagraph(strprintf(_("Copyright (C) 2009 -%i The Bitcoin Core developers"), COPYRIGHT_YEAR)) + "\n" +
-		   FormatParagraph(strprintf(_("Copyright (C) 2014 -%i The Dash Developers"), COPYRIGHT_YEAR)) + "\n" +
+           FormatParagraph(strprintf(_("Copyright (C) 2014 -%i The Dash Developers"), COPYRIGHT_YEAR)) + "\n" +
            FormatParagraph(strprintf(_("Copyright (C) 2015 -%i The Kreds Developers"), COPYRIGHT_YEAR)) + "\n" + "\n" +
            strprintf(_("Please contribute if you find %s useful. "
                        "Visit %s for further information about the software."),
@@ -769,7 +770,7 @@ void ThreadImport(std::vector<boost::filesystem::path> vImportFiles)
  */
 bool InitSanityCheck(void)
 {
-    if(!ECC_InitSanityCheck()) {
+    if (!ECC_InitSanityCheck()) {
         InitError("Elliptic curve cryptography sanity check failure. Aborting.");
         return false;
     }
@@ -859,9 +860,9 @@ void InitParameterInteraction()
         if (SoftSetBoolArg("-whitelistrelay", true))
             LogPrintf("%s: parameter interaction: -whitelistforcerelay=1 -> setting -whitelistrelay=1\n", __func__);
     }
-	
-	/**TODO-- */
-	/*if(!GetBoolArg("-enableinstantx", fEnableInstantX)){
+
+    /**TODO-- */
+    /* if (!GetBoolArg("-enableinstantx", fEnableInstantX)) {
         if (SoftSetArg("-instantxdepth", 0))
             LogPrintf("AppInit2 : parameter interaction: -enableinstantx=false -> setting -nInstantXDepth=0\n");
     }
@@ -877,7 +878,7 @@ void InitParameterInteraction()
         mapArgs["-darksendmultisession"] = "0";
         LogPrintf("AppInit2 : parameter interaction: -liquidityprovider=%d -> setting -darksendmultisession=0\n", nLiqProvTmp);
     }*/
-	//TODO-- ends
+    //TODO-- ends
 }
 
 static std::string ResolveErrMsg(const char * const optname, const std::string& strBind)
@@ -888,7 +889,7 @@ static std::string ResolveErrMsg(const char * const optname, const std::string& 
 void InitLogging()
 {
     fPrintToConsole = GetBoolArg("-printtoconsole", false);
-	fPrintToDebugLog = GetBoolArg("-printtodebuglog", true) && !fPrintToConsole;//TODO--
+    fPrintToDebugLog = GetBoolArg("-printtodebuglog", true) && !fPrintToConsole;//TODO--
     fLogTimestamps = GetBoolArg("-logtimestamps", DEFAULT_LOGTIMESTAMPS);
     fLogTimeMicros = GetBoolArg("-logtimemicros", DEFAULT_LOGTIMEMICROS);
     fLogIPs = GetBoolArg("-logips", DEFAULT_LOGIPS);
@@ -1148,8 +1149,8 @@ bool AppInitParameterInteraction()
 #ifdef ENABLE_WALLET
     if (!CWallet::ParameterInteraction())
         return false;
-	
-	/* std::string strWalletFile = GetArg("-wallet", "wallet.dat"); */
+
+    /* std::string strWalletFile = GetArg("-wallet", "wallet.dat"); */
 #endif
 
     fIsBareMultisigStd = GetBoolArg("-permitbaremultisig", DEFAULT_PERMIT_BAREMULTISIG);
@@ -1227,7 +1228,7 @@ static bool LockDataDirectory(bool probeOnly)
 
     try {
         static boost::interprocess::file_lock lock(pathLockFile.string().c_str());
-		/**TODO-- */
+        /**TODO-- */
        // Wait maximum 10 seconds if an old wallet is still running. Avoids lockup during restart
         if (!lock.timed_lock(boost::get_system_time() + boost::posix_time::seconds(10)))
             return InitError(strprintf(_("Cannot obtain a lock on data directory %s. Kreds is probably already running."), strDataDir));
@@ -1294,9 +1295,9 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
         for (int i=0; i<nScriptCheckThreads-1; i++)
             threadGroup.create_thread(&ThreadScriptCheck);
     }
-	
-	/**TODO-- */
-	/*if (mapArgs.count("-sporkkey")) // spork priv key
+
+    /**TODO-- */
+    /* if (mapArgs.count("-sporkkey")) // spork priv key
     {
         if (!sporkManager.SetPrivKey(GetArg("-sporkkey", "")))
             return InitError(_("Unable to sign spork message, wrong key?"));
@@ -1317,23 +1318,21 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
         if (!AppInitServers(threadGroup))
             return InitError(_("Unable to start HTTP server. See debug log for details."));
     }
-	
-	if (mapMultiArgs.count("-masternodepaymentskey")) // masternode payments priv key
+
+    if (mapMultiArgs.count("-masternodepaymentskey")) // masternode payments priv key
     {
-        if (!masternodePayments.SetPrivKey(GetArg("-masternodepaymentskey", ""))){
-			//CKey secret;
-			//secret.MakeNewKey(false);
-
-			//LogPrintf("Masternode: Create new key %s", CKredsSecret(secret).ToString());
+        if (!masternodePayments.SetPrivKey(GetArg("-masternodepaymentskey", ""))) {
+            //CKey secret;
+            //secret.MakeNewKey(false);
+            //LogPrintf("Masternode: Create new key %s", CKredsSecret(secret).ToString());
             return InitError(_("Unable to sign masternode payment winner, wrong key?"));
-		}
-        if (!sporkManager.SetPrivKey(GetArg("-masternodepaymentskey", ""))){
-			//CKey secret;
-			//secret.MakeNewKey(false);
-
-			//LogPrintf("Masternode: Create new key %s", CKredsSecret(secret).ToString());
+        }
+        if (!sporkManager.SetPrivKey(GetArg("-masternodepaymentskey", ""))) {
+            //CKey secret;
+            //secret.MakeNewKey(false);
+            //LogPrintf("Masternode: Create new key %s", CKredsSecret(secret).ToString());
             return InitError(_("Unable to sign spork message, wrong key?"));
-		}
+        }
     }
 
     //ignore masternodes below protocol version
@@ -1345,8 +1344,8 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
 #ifdef ENABLE_WALLET
    //if (!fDisableWallet) {
     
-	/**TODO-- */
-	std::string strWalletFile = GetArg("-wallet", "wallet.dat");
+        /**TODO-- */
+        std::string strWalletFile = GetArg("-wallet", "wallet.dat");
         filesystem::path backupDir = GetDataDir() / "backups";
         if (!filesystem::exists(backupDir))
         {
@@ -1355,7 +1354,7 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
         }
         nWalletBackups = GetArg("-createwalletbackups", 10);
         nWalletBackups = std::max(0, std::min(10, nWalletBackups));
-        if(nWalletBackups > 0)
+        if (nWalletBackups > 0)
         {
             if (filesystem::exists(backupDir))
             {
@@ -1369,7 +1368,7 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
                 boost::filesystem::path backupFile = backupPathStr + dateTimeStr;
                 sourceFile.make_preferred();
                 backupFile.make_preferred();
-                if(boost::filesystem::exists(sourceFile)) {
+                if (boost::filesystem::exists(sourceFile)) {
                     try {
                         boost::filesystem::copy_file(sourceFile, backupFile);
                         LogPrintf("Creating backup of %s -> %s\n", sourceFile, backupFile);
@@ -1392,7 +1391,7 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
                     {
                         currentFile = dir_iter->path().filename();
                         // Only add the backups for the current wallet, e.g. wallet.dat.*
-                        if(dir_iter->path().stem().string() == strWalletFile)
+                        if (dir_iter->path().stem().string() == strWalletFile)
                         {
                             folder_set.insert(folder_set_t::value_type(boost::filesystem::last_write_time(dir_iter->path()), *dir_iter));
                         }
@@ -1436,10 +1435,10 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
     //keePassInt.init();
 
     //} /// (!fDisableWallet)
-	
-	//originally -- 
-	if (!CWallet::Verify())
-        return false;
+
+        //originally -- 
+        if (!CWallet::Verify())
+            return false;
 #endif
     // ********************************************************* Step 6: network initialization
     // Note that we absolutely cannot open any actual connections
@@ -1846,9 +1845,9 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
         uiInterface.NotifyBlockTip.disconnect(BlockNotifyGenesisWait);
     }
 
-	
-	/**TODO-- */
-	// ********************************************************* Step 10: setup Masternode
+
+    /**TODO-- */
+    // ********************************************************* Step 10: setup Masternode
 
     //string strNode = "23.23.186.131";
     //CAddress addr;
@@ -1863,36 +1862,36 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
     else if (readResult != CMasternodeDB::Ok)
     {
         LogPrintf("Error reading mncache.dat: ");
-        if(readResult == CMasternodeDB::IncorrectFormat)
+        if (readResult == CMasternodeDB::IncorrectFormat)
             LogPrintf("magic is ok but data has invalid format, will try to recreate\n");
         else
             LogPrintf("file format is unknown or invalid, please fix it manually\n");
     }
 
     fMasterNode = GetBoolArg("-masternode", false);
-    if(fMasterNode) {
+    if (fMasterNode) {
         LogPrintf("IS DARKSEND MASTER NODE\n");
         strMasterNodeAddr = GetArg("-masternodeaddr", "");
 
         LogPrintf(" addr %s\n", strMasterNodeAddr.c_str());
 
-        if(!strMasterNodeAddr.empty()){
+        if (!strMasterNodeAddr.empty()) {
             CService addrTest;
-			CService service2(LookupNumeric(strMasterNodeAddr.c_str(), 0));
-			addrTest = service2;
+            CService service2(LookupNumeric(strMasterNodeAddr.c_str(), 0));
+            addrTest = service2;
             if (!addrTest.IsValid()) {
                 return InitError("Invalid -masternodeaddr address: " + strMasterNodeAddr);
             }
         }
 
         strMasterNodePrivKey = GetArg("-masternodeprivkey", "");
-        if(!strMasterNodePrivKey.empty()){
+        if (!strMasterNodePrivKey.empty()){
             std::string errorMessage;
 
             CKey key;
             CPubKey pubkey;
 
-            if(!darkSendSigner.SetKey(strMasterNodePrivKey, errorMessage, key, pubkey))
+            if (!darkSendSigner.SetKey(strMasterNodePrivKey, errorMessage, key, pubkey))
             {
                 return InitError(_("Invalid masternodeprivkey. Please see documenation."));
             }
@@ -1903,7 +1902,7 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
             return InitError(_("You must specify a masternodeprivkey in the configuration. Please see documentation for help."));
         }
     }
-    if(GetBoolArg("-mnconflock", true)) {
+    if (GetBoolArg("-mnconflock", true)) {
         LogPrintf("Locking Masternodes:\n");
         uint256 mnTxHash;
         BOOST_FOREACH(CMasternodeConfig::CMasternodeEntry mne, masternodeConfig.getEntries()) {
@@ -1914,21 +1913,20 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
         }
     }
 
-	//-promode active all Masternode and Darksend related functionality (Darksendcore and Masternode is but online) (For disalbel DS-Core and InstantX use -disable_DS_InstantX)
+    //-promode active all Masternode and Darksend related functionality (Darksendcore and Masternode is but online) (For disalbel DS-Core and InstantX use -disable_DS_InstantX)
     fProUserModeDarksendInstantX = GetBoolArg("-promode", false); //Kredsdev im Standart an (Darksend und Instantx ist im QT nicht sichtbar)
-	fProUserModeDarksendInstantX2 = GetBoolArg("-disable_DS_InstantX", false);  // Kredsdev im Standart aus (Darksend und Instantx ist im Core an)
-    if((fMasterNode && !fProUserModeDarksendInstantX) || (fMasterNode && fProUserModeDarksendInstantX2)){
+    fProUserModeDarksendInstantX2 = GetBoolArg("-disable_DS_InstantX", false);  // Kredsdev im Standart aus (Darksend und Instantx ist im Core an)
+    if ((fMasterNode && !fProUserModeDarksendInstantX) || (fMasterNode && fProUserModeDarksendInstantX2)) {
         return InitError("You can not start a masternode in -promode=0 or -disable_Darksend_InstantX_on_Core=1");
     } //Kredsdev 13-05-2016
 
     LogPrintf("fProUserModeDarksendInstantX -promode %d # ", fProUserModeDarksendInstantX);
-	LogPrintf("fProUserModeDarksendInstantX2 -disable_Darksend_InstantX  %d  #", fProUserModeDarksendInstantX2);
-    
+    LogPrintf("fProUserModeDarksendInstantX2 -disable_Darksend_InstantX  %d  #", fProUserModeDarksendInstantX2);
 
     darkSendSigner.InitCollateralAddress();
 
     threadGroup.create_thread(boost::bind(&ThreadBitPool)); //TODO-- ends
-	
+
     // ********************************************************* Step 11: start node
 
     //// debug print

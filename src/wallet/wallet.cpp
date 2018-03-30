@@ -304,7 +304,7 @@ bool CWallet::Unlock(const SecureString& strWalletPassphrase, bool anonimizeOnly
         LOCK(cs_wallet);
         BOOST_FOREACH(const MasterKeyMap::value_type& pMasterKey, mapMasterKeys)
         {
-            if(!crypter.SetKeyFromPassphrase(strWalletPassphrase, pMasterKey.second.vchSalt, pMasterKey.second.nDeriveIterations, pMasterKey.second.nDerivationMethod))
+            if (!crypter.SetKeyFromPassphrase(strWalletPassphrase, pMasterKey.second.vchSalt, pMasterKey.second.nDeriveIterations, pMasterKey.second.nDerivationMethod))
                 return false;
             if (!crypter.Decrypt(pMasterKey.second.vchCryptedKey, vMasterKey))
                 continue; // try another master key
@@ -327,7 +327,7 @@ bool CWallet::ChangeWalletPassphrase(const SecureString& strOldWalletPassphrase,
         CKeyingMaterial vMasterKey;
         BOOST_FOREACH(MasterKeyMap::value_type& pMasterKey, mapMasterKeys)
         {
-            if(!crypter.SetKeyFromPassphrase(strOldWalletPassphrase, pMasterKey.second.vchSalt, pMasterKey.second.nDeriveIterations, pMasterKey.second.nDerivationMethod))
+            if (!crypter.SetKeyFromPassphrase(strOldWalletPassphrase, pMasterKey.second.vchSalt, pMasterKey.second.nDeriveIterations, pMasterKey.second.nDerivationMethod))
                 return false;
             if (!crypter.Decrypt(pMasterKey.second.vchCryptedKey, vMasterKey))
                 return false;
@@ -1670,28 +1670,27 @@ CAmount CWalletTx::GetDebit(const isminefilter& filter) const
         return 0;
 
     CAmount debit = 0;
-    if(filter & ISMINE_SPENDABLE)
-    {
-        if (fDebitCached)
+
+    if (filter & ISMINE_SPENDABLE) {
+        if (fDebitCached) {
             debit += nDebitCached;
-        else
-        {
+        } else {
             nDebitCached = pwallet->GetDebit(*this, ISMINE_SPENDABLE);
             fDebitCached = true;
             debit += nDebitCached;
         }
     }
-    if(filter & ISMINE_WATCH_ONLY)
-    {
-        if(fWatchDebitCached)
+
+    if (filter & ISMINE_WATCH_ONLY) {
+        if (fWatchDebitCached) {
             debit += nWatchDebitCached;
-        else
-        {
+        } else {
             nWatchDebitCached = pwallet->GetDebit(*this, ISMINE_WATCH_ONLY);
             fWatchDebitCached = true;
             debit += nWatchDebitCached;
         }
     }
+
     return debit;
 }
 
@@ -2943,8 +2942,7 @@ bool CWallet::DelAddressBook(const CTxDestination& address)
     {
         LOCK(cs_wallet); // mapAddressBook
 
-        if(fFileBacked)
-        {
+        if (fFileBacked) {
             // Delete destdata tuples associated with address
             std::string strAddress = CKredsAddress(address).ToString();
             BOOST_FOREACH(const PAIRTYPE(string, string) &item, mapAddressBook[address].destdata)
@@ -3046,7 +3044,7 @@ void CWallet::ReserveKeyFromKeyPool(int64_t& nIndex, CKeyPool& keypool)
             TopUpKeyPool();
 
         // Get the oldest key
-        if(setKeyPool.empty())
+        if (setKeyPool.empty())
             return;
 
         CWalletDB walletdb(strWalletFile);
@@ -3145,7 +3143,7 @@ std::map<CTxDestination, CAmount> CWallet::GetAddressBalances()
                 CTxDestination addr;
                 if (!IsMine(pcoin->tx->vout[i]))
                     continue;
-                if(!ExtractDestination(pcoin->tx->vout[i].scriptPubKey, addr))
+                if (!ExtractDestination(pcoin->tx->vout[i].scriptPubKey, addr))
                     continue;
 
                 CAmount n = IsSpent(walletEntry.first, i) ? 0 : pcoin->tx->vout[i].nValue;
@@ -3177,9 +3175,9 @@ set< set<CTxDestination> > CWallet::GetAddressGroupings()
             BOOST_FOREACH(CTxIn txin, pcoin->tx->vin)
             {
                 CTxDestination address;
-                if(!IsMine(txin)) /* If this input isn't mine, ignore it */
+                if (!IsMine(txin)) /* If this input isn't mine, ignore it */
                     continue;
-                if(!ExtractDestination(mapWallet[txin.prevout.hash].tx->vout[txin.prevout.n].scriptPubKey, address))
+                if (!ExtractDestination(mapWallet[txin.prevout.hash].tx->vout[txin.prevout.n].scriptPubKey, address))
                     continue;
                 grouping.insert(address);
                 any_mine = true;
@@ -3192,7 +3190,7 @@ set< set<CTxDestination> > CWallet::GetAddressGroupings()
                    if (IsChange(txout))
                    {
                        CTxDestination txoutAddr;
-                       if(!ExtractDestination(txout.scriptPubKey, txoutAddr))
+                       if (!ExtractDestination(txout.scriptPubKey, txoutAddr))
                            continue;
                        grouping.insert(txoutAddr);
                    }
@@ -3209,7 +3207,7 @@ set< set<CTxDestination> > CWallet::GetAddressGroupings()
             if (IsMine(pcoin->tx->vout[i]))
             {
                 CTxDestination address;
-                if(!ExtractDestination(pcoin->tx->vout[i].scriptPubKey, address))
+                if (!ExtractDestination(pcoin->tx->vout[i].scriptPubKey, address))
                     continue;
                 grouping.insert(address);
                 groupings.insert(grouping);
@@ -3357,12 +3355,12 @@ bool CWallet::UpdatedTransaction(const uint256 &hashTx)//TODO--
         LOCK(cs_wallet);
         // Only notify UI if this transaction is in this wallet
         map<uint256, CWalletTx>::const_iterator mi = mapWallet.find(hashTx);
-        if (mi != mapWallet.end()){
+        if (mi != mapWallet.end()) {
             NotifyTransactionChanged(this, hashTx, CT_UPDATED);
-			return true;
-		}
+            return true;
+        }
     }
-	return false;
+    return false;
 }
 
 
@@ -3530,13 +3528,12 @@ bool CWallet::LoadDestData(const CTxDestination &dest, const std::string &key, c
 bool CWallet::GetDestData(const CTxDestination &dest, const std::string &key, std::string *value) const
 {
     std::map<CTxDestination, CAddressBookData>::const_iterator i = mapAddressBook.find(dest);
-    if(i != mapAddressBook.end())
-    {
+    if (i != mapAddressBook.end()) {
         CAddressBookData::StringMap::const_iterator j = i->second.destdata.find(key);
-        if(j != i->second.destdata.end())
-        {
-            if(value)
+        if (j != i->second.destdata.end()) {
+            if (value) {
                 *value = j->second;
+            }
             return true;
         }
     }
