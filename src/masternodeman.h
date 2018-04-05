@@ -105,6 +105,8 @@ public:
 
     int CountEnabled();
 
+    int CountByIP(int nodeType);
+
     int CountMasternodesAboveProtocol(int protocolVersion);
 
     void DsegUpdate(CNode* pnode);

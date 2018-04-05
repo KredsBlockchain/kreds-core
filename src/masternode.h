@@ -94,6 +94,7 @@ public:
     int64_t lastVote;
     int nScanningErrorCount;
     int nLastScanningErrorBlockHeight;
+    int64_t nLastDseep;
 
     CMasternode();
     CMasternode(const CMasternode& other);
@@ -127,6 +128,7 @@ public:
         swap(first.lastVote, second.lastVote);
         swap(first.nScanningErrorCount, second.nScanningErrorCount);
         swap(first.nLastScanningErrorBlockHeight, second.nLastScanningErrorBlockHeight);
+        swap(first.nLastDseep, second.nLastDseep);
     }
 
     CMasternode& operator=(CMasternode from)
@@ -177,6 +179,7 @@ public:
                 READWRITE(lastVote);
                 READWRITE(nScanningErrorCount);
                 READWRITE(nLastScanningErrorBlockHeight);
+                READWRITE(nLastDseep);
         }
     }
 
