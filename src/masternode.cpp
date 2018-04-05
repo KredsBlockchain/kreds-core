@@ -182,6 +182,7 @@ CMasternode::CMasternode()
     lastVote = 0;
     nScanningErrorCount = 0;
     nLastScanningErrorBlockHeight = 0;
+    nLastDseep = 0;
 }
 
 CMasternode::CMasternode(const CMasternode& other)
@@ -208,6 +209,7 @@ CMasternode::CMasternode(const CMasternode& other)
     lastVote = other.lastVote;
     nScanningErrorCount = other.nScanningErrorCount;
     nLastScanningErrorBlockHeight = other.nLastScanningErrorBlockHeight;
+    nLastDseep = other.nLastDseep;
 }
 
 CMasternode::CMasternode(CService newAddr, CTxIn newVin, CPubKey newPubkey, std::vector<unsigned char> newSig, int64_t newSigTime, CPubKey newPubkey2, int protocolVersionIn, CScript newDonationAddress, int newDonationPercentage)

@@ -74,7 +74,12 @@ int ClientModel::getNumConnections(unsigned int flags) const
 
 QString ClientModel::getMasternodeCountString() const
 {
-   return QString::number((int)mnodeman.CountEnabled()) + " / " + QString::number((int)mnodeman.size());
+   return tr("Total: %1 (Enabled: %2) (IPv4: %3, IPv6: %4, TOR: %5)")
+             .arg(QString::number((int)mnodeman.size()))
+             .arg(QString::number((int)mnodeman.CountEnabled()))
+             .arg(QString::number((int)mnodeman.CountByIP(NET_IPV4)))
+             .arg(QString::number((int)mnodeman.CountByIP(NET_IPV6)))
+             .arg(QString::number((int)mnodeman.CountByIP(NET_TOR)));
 }
 
 int ClientModel::getNumBlocks() const
