@@ -1351,7 +1351,7 @@ CAmount GetBlockSubsidy(int nBits, int nHeight, const Consensus::Params& consens
 	if (nHeight > 2)
 		nSubsidy = 225 * COIN;
 	//Fork block height for block reward change of 225 to 112.5 (50% reduction)
-	if (nHeight > 42230)
+	if (nHeight > 42330)
 		nSubsidy = 112.5 * COIN;
 	if (nHeight > 131400)
 		nSubsidy = 110.8125 * COIN;
@@ -1404,7 +1404,7 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 	if (nHeight > 2)
 		nSubsidy = 225 * COIN;
 	//Fork block height for block reward change of 225 to 112.5 (50% reduction)
-	if (nHeight > 42310)
+	if (nHeight > 42330)
 		nSubsidy = 112.5 * COIN;
 	if (nHeight > 131400)
 		nSubsidy = 110.8125 * COIN;
@@ -2208,12 +2208,15 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
             if (masternodeValue == 0) {
                 missingMNPayment = false;
 			//Coinbase should only consist of miner payment and masternode payment
-            } else if (tx.vout.size() != 2) {
+            } else if (pindex->nHeight > 42330 && tx.vout.size() != 2) {
+				LogPrintf("EMP: block coinbase transaction malformed: vouts=%d!\n", tx.vout.size());
+                missingMNPayment = true;
+			} else if (tx.vout.size() < 2) {
                 LogPrintf("EMP: block coinbase transaction malformed: vouts=%d!\n", tx.vout.size());
                 missingMNPayment = true;
             }
 			else {
-				if (pindex->nHeight > 42310) {
+				if (pindex->nHeight > 42330) {
 					unsigned int blockRewardTargetCount = 0;
 					BOOST_FOREACH(const CTxOut& output, tx.vout) {
 						if (output.scriptPubKey != CScript())
