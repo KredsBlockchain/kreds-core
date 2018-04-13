@@ -1396,6 +1396,59 @@ CAmount GetBlockSubsidy(int nBits, int nHeight, const Consensus::Params& consens
     return nSubsidy;
 }
 
+CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
+{
+    CAmount nSubsidy = 0 * COIN;
+	if (nHeight <= 1)
+		nSubsidy = 600000000 * COIN;
+	if (nHeight > 2)
+		nSubsidy = 225 * COIN;
+	//Fork block height for block reward change of 225 to 112.5 (50% reduction)
+	if (nHeight > 42310)
+		nSubsidy = 112.5 * COIN;
+	if (nHeight > 131400)
+		nSubsidy = 110.8125 * COIN;
+	if (nHeight > 262800)
+		nSubsidy = 109.1503125 * COIN;
+	if (nHeight > 394200)
+		nSubsidy = 107.51305781 * COIN;
+	if (nHeight > 525600)
+		nSubsidy = 104.31185651 * COIN;
+	if (nHeight > 657000)
+		nSubsidy = 102.74717866 * COIN;
+	if (nHeight > 788400)
+		nSubsidy = 101.20597098 * COIN;
+	if (nHeight > 919800)
+		nSubsidy = 99.68788141 * COIN;
+	if (nHeight > 1051200)
+		nSubsidy = 98.19256319 * COIN;
+	if (nHeight > 1182600)
+		nSubsidy = 96.71967474 * COIN;
+	if (nHeight > 1314000)
+		nSubsidy = 95.26887962 * COIN;
+	if (nHeight > 1445400)
+		nSubsidy = 93.83984643 * COIN;
+	if (nHeight > 1576800)
+		nSubsidy = 92.43224873 * COIN;
+	if (nHeight > 1708200)
+		nSubsidy = 91.045765003 * COIN;
+	if (nHeight > 1839600)
+		nSubsidy = 89.68007852 * COIN;
+	if (nHeight > 1971000)
+		nSubsidy = 88.33487735 * COIN;
+	if (nHeight > 2102400)
+		nSubsidy = 87.00985418 * COIN;
+	if (nHeight > 2233800)
+		nSubsidy = 85.70470637 * COIN;
+	if (nHeight > 2365200)
+		nSubsidy = 84.41913578 * COIN;
+	if (nHeight > 2496600)
+		nSubsidy = 83.15284874 * COIN;
+	if (nHeight > 2628000)
+		nSubsidy = 81.90555601 * COIN;
+    return nSubsidy;
+}
+
 CAmount GetMasternodePayment(int nHeight, CAmount blockValue, const Consensus::Params& consensusParams)
 {   
 
@@ -2160,7 +2213,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
                 missingMNPayment = true;
             }
 			else {
-				if (pindex->nHeight > 42260) {
+				if (pindex->nHeight > 42310) {
 					unsigned int blockRewardTargetCount = 0;
 					BOOST_FOREACH(const CTxOut& output, tx.vout) {
 						if (output.scriptPubKey != CScript())
