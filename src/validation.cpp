@@ -2147,13 +2147,34 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
             CAmount masternodeValue = GetMasternodePayment(pindex->nHeight, nValue, chainparams.GetConsensus());
             // CAmount minerValue = nValue - masternodeValue;
             missingMNPayment = false;
+			CAmount tVal = GetBlockSubsidy(pindex->nHeight, chainparams.GetConsensus()) * 0.05;
+			CAmount rBuffer = tVal/4;
+			CAmount minerValue = nValue - masternodeValue;
+			
             //No Nodes
             if (masternodeValue == 0) {
                 missingMNPayment = false;
-            } else if (tx.vout.size() < 2) {
+			//Coinbase should only consist of miner payment and masternode payment
+            } else if (tx.vout.size() != 2) {
                 LogPrintf("EMP: block coinbase transaction malformed: vouts=%d!\n", tx.vout.size());
                 missingMNPayment = true;
             }
+			else {
+				if (pindex->nHeight > 42260) {
+					unsigned int blockRewardTargetCount = 0;
+					BOOST_FOREACH(const CTxOut& output, tx.vout) {
+						if (output.scriptPubKey != CScript())
+						{
+							if ((output.nValue > (minerValue - rBuffer) && output.nValue < (minerValue + rBuffer)) || (output.nValue > (masternodeValue - rBuffer) && output.nValue < (masternodeValue + rBuffer)))
+								++blockRewardTargetCount;
+						}
+					}
+					if(blockRewardTargetCount != 2) {
+					  LogPrintf("EMP: block coinbase transaction invalid non-zero vouts: %d\n", blockRewardTargetCount);
+					  missingMNPayment = true;
+					}
+				}
+			}
         }
 
         if (missingMNPayment || incorrectMNPayment) {
