@@ -115,7 +115,7 @@ uint32_t GetNextWorkRequiredD106(const CBlockIndex *pindexPrev,
 
     unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
     
-    LogPrintf("Retargeting with D106\n");
+    //LogPrintf("Retargeting with D106\n");
 
     // Genesis block
     if (pindexPrev == NULL)
