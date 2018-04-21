@@ -14,7 +14,7 @@ __________________________________________________________________________
 ###### Block Max Size: 4 MB
 ###### Max Block Size Serialized Size: 8 MB
 ###### Block Time: ~120 seconds
-###### Block Reward: 225 KREDS
+###### Block Reward: 112,5 KREDS
 ###### Block Reward Decrease: 1.5% every 6 months for 10 years
 ###### Coin Maturity: 50 blocks
 ###### Maximum Coin Supply: 1.1B
@@ -25,7 +25,7 @@ __________________________________________________________________________
 ###### Lightning Network: Compatible
 ###### Atomic Swaps: Compatible
 ###### Masternodes: Enabled
-###### Masternodes Collateral: 50000 KREDS
+###### Masternodes Collateral: 200000 KREDS
 ###### Masternodes Payments Start Block: 15000
 ###### Masternode Reward: 50% of block reward
 
@@ -34,7 +34,7 @@ __________________________________________________________________________
 
 #### Masternodes
 
-Masternodes will be supported with a collateral requirement of **50000 KREDS**.  
+Masternodes will be supported with a collateral requirement of **200000 KREDS**.  
 
 Masternode payments do not start until block 15000.
 
