@@ -4,7 +4,7 @@
 There are many ways to setup a wallet to support start-many. This guide will walk through two of them.
 
 1. [Importing an existing wallet (recommended if you are consolidating wallets).](#option1)
-2. [Sending 50000 KREDS to new wallet addresses.](#option2)
+2. [Sending 200000 KREDS to new wallet addresses.](#option2)
 
 ## <a name="option1"></a>Option 1. Importing an existing wallet
 
@@ -56,9 +56,9 @@ Create a new wallet address for each MasterNode.
 
 Close your QT Wallet.
 
-### Send 50000 KREDS to New Addresses
+### Send 200000 KREDS to New Addresses
 
-Just like setting up a standard MN. Send exactly 50000 KREDS to each new address created above.
+Just like setting up a standard MN. Send exactly 200000 KREDS to each new address created above.
 
 ### Create New Masternode Private Keys
 
@@ -82,7 +82,7 @@ Copy the masternode private key and correspondig collateral output transaction t
 
 The masternode private key may be an existing key from [Option 1](#option1), or a newly generated key from [Option 2](#option2). 
 
-*Please note, the masternode priviate key is not the same as a wallet private key. Never put your wallet private key in the masternode.conf file. That is equivalent to putting your 50000 KREDS on the remote server and defeats the purpose of a hot/cold setup.*
+*Please note, the masternode priviate key is not the same as a wallet private key. Never put your wallet private key in the masternode.conf file. That is equivalent to putting your 200000 KREDS on the remote server and defeats the purpose of a hot/cold setup.*
 
 ### Get the collateral output
 
@@ -109,7 +109,6 @@ Example:
 
 ```
 mn01 127.0.0.1:3950 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0
-mn02 127.0.0.2:3950 93WaAb3htPJEV8E9aQcN23Jt97bPex7YvWfgMDTUdWJvzmrMqey aa9f1034d973377a5e733272c3d0eced1de22555ad45d6b24abadff8087948d4 0 7gnwGHt17heGpG9Crfeh4KGpYNFugPhJdh:25
 ```
 
 ## What about the kreds.conf file?
