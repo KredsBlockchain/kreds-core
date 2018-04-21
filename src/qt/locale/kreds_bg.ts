@@ -291,7 +291,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="124"/>
-        <source>Kreds will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your darkcoins from being stolen by malware infecting your computer.</source>
+        <source>Kreds will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your KREDS from being stolen by malware infecting your computer.</source>
         <translation>Kreds ще се затвори сега, за да завърши процеса по шифриране. Запомнете, че шифрирането на вашия портфейл не може напълно да ви предпази от кражба на монетите от зловреден софтуер инфектирал компютъра ви. </translation>
     </message>
     <message>
@@ -2981,8 +2981,8 @@ https://www.transifex.com/projects/p/kreds/</translation>
     </message>
     <message>
         <location filename="../forms/sendcoinsentry.ui" line="157"/>
-        <source>A message that was attached to the darkcoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Kreds network.</source>
-        <translation>Съобщението което беше прикрепено към darkcoin: URI ще бъде запазено с транзакцията за ваше сведение. Забележка: Това съобщение няма да бъде изпратено през Kreds мрежата.</translation>
+        <source>A message that was attached to the KREDS: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Kreds network.</source>
+        <translation>Съобщението което беше прикрепено към KREDS: URI ще бъде запазено с транзакцията за ваше сведение. Забележка: Това съобщение няма да бъде изпратено през Kreds мрежата.</translation>
     </message>
     <message>
         <location filename="../forms/sendcoinsentry.ui" line="583"/>
@@ -3935,7 +3935,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Kreds Alert&quot; admin@foo.co
         <translation>%s, трябва да зададете rpcpassword в конфигурационния  файл:
 %s
 Препоръчително е да използвате следната произволна парола:
-rpcuser=darkcoinrpc
+rpcuser=kredsrpc
 rpcpassword=%s
 (не е нужно да запомняте тази парола)
 Потребителя и паролата НЕ ТРЯБВА  да са еднакви.
