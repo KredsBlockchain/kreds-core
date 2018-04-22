@@ -5,7 +5,7 @@ Some notes on how to build a Kreds Masternode in Ubuntu server. Using Windows Qt
 
 System requirements
 --------------------
-On Ubuntu TLS 64bit server is recommended with at least 512MB 
+On Ubuntu LTS 64bit server is recommended with at least 512MB 
 of memory and 15GB space available when running a Masternode.
 
 
