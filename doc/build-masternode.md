@@ -5,16 +5,16 @@ Some notes on how to build a Kreds Masternode in Ubuntu server. Using Windows Qt
 
 System requirements
 --------------------
-On Ubuntu 64bit server is recommended with at least 768MB 
+On Ubuntu LTS 64bit server is recommended with at least 512MB 
 of memory and 15GB space available when running a Masternode.
 
 
 Notes
 -----
-You need exactly 50000 KREDS to run a Masternode. Masternode input must have at least 15 confirmations.
+You need exactly 200000 KREDS to run a Masternode. Masternode input must have at least 15 confirmations.
 Building a new wallet.dat is also recommended (a seperate .conf is needed). Masternode earnings are
 going to this wallet.dat and address. Send only newly earned coins away and pay attention for transaction fees.
-To fix a broken accountaddress 0 (possible when sending huge amounts of coins away), do a self TX of 50000 KREDS.
+To fix a broken accountaddress 0 (possible when sending huge amounts of coins away), do a self TX of 200000 KREDS.
 
 
 Start
@@ -28,7 +28,7 @@ Open your Windows Kreds-Qt Client and open the debug console.
 	copy the generated address to a text file
 	---
 	encryptwallet "strong password"
-	Send 50000 KREDS to "address 0"
+	Send 200000 KREDS to "address 0"
 
 Build Instructions: Ubuntu & Debian
 -----------------------------------
@@ -78,8 +78,8 @@ Build Instructions: Ubuntu & Debian
 	------------
 	mkdir .kreds
 	cd .kreds
-	wget https://github.com/KredsBlockchain/kreds-core/releases/download/v1.0.0.1/kreds-linux64-v1.0.0.1.tar.xz
-	tar xf kreds-linux64-v1.0.0.1.tar.xz
+	wget https://github.com/KredsBlockchain/kreds-core/releases/download/v1.0.0.4/kreds-linux64-v1.0.0.4.tar.xz
+	tar xf kreds-linux64-v1.0.0.4.tar.xz
 	
 	$ sudo cp kredsd /usr/bin
 	$ sudo chmod 775 /usr/bin/kredsd
