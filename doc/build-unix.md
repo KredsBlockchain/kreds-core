@@ -11,6 +11,18 @@ To Build
 	make install # optional
 	
 	strip kredsd kreds-cli kreds-qt
+	
+Example Build Command
+--------------------
+Qt Wallet and Deamon, CLI version build:
+
+    ./autogen.sh && ./configure --with-gui && make && make install
+
+CLI and Deamon Only Buld:
+
+    ./autogen.sh && ./configure --without-gui && make && make install
+
+
 
 This will build kreds-qt as well if the dependencies are met.
 
