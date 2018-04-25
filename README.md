@@ -9,7 +9,7 @@ Introducing a new decentralised, open source, community driven digital currency.
 __________________________________________________________________________
 ### Specifications
 
-###### Version: 1.0.0.3
+###### Version: 1.0.0.4
 ###### Proof-of-Work Algorithm: Lyra2REv2
 ###### Block Max Size: 4 MB
 ###### Max Block Size Serialized Size: 8 MB
@@ -25,7 +25,7 @@ __________________________________________________________________________
 ###### Lightning Network: Compatible
 ###### Atomic Swaps: Compatible
 ###### Masternodes: Enabled
-###### Masternodes Collateral: 200000 KREDS
+###### Masternodes Collateral: 100000 KREDS
 ###### Masternodes Payments Start Block: 15000
 ###### Masternode Reward: 50% of block reward
 
@@ -34,7 +34,7 @@ __________________________________________________________________________
 
 #### Masternodes
 
-Masternodes will be supported with a collateral requirement of **200000 KREDS**.  
+Masternodes will be supported with a collateral requirement of **100000 KREDS**.  
 
 Masternode payments do not start until block 15000.
 
