@@ -11,10 +11,10 @@ of memory and 15GB space available when running a Masternode.
 
 Notes
 -----
-You need exactly 200000 KREDS to run a Masternode. Masternode input must have at least 15 confirmations.
+You need exactly 100000 KREDS to run a Masternode. Masternode input must have at least 15 confirmations.
 Building a new wallet.dat is also recommended (a seperate .conf is needed). Masternode earnings are
 going to this wallet.dat and address. Send only newly earned coins away and pay attention for transaction fees.
-To fix a broken accountaddress 0 (possible when sending huge amounts of coins away), do a self TX of 200000 KREDS.
+To fix a broken accountaddress 0 (possible when sending huge amounts of coins away), do a self TX of 100000 KREDS.
 
 
 Start
@@ -28,7 +28,7 @@ Open your Windows Kreds-Qt Client and open the debug console.
 	copy the generated address to a text file
 	---
 	encryptwallet "strong password"
-	Send 200000 KREDS to "address 0"
+	Send 100000 KREDS to "address 0"
 
 Build Instructions: Ubuntu & Debian
 -----------------------------------
