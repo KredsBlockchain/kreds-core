@@ -1,7 +1,7 @@
 Multi masternode config
 =======================
 
-The multi masternode config allows to control multiple masternodes from a single wallet. The wallet needs to have a valid collaral output of 200000 coins for each masternode. To use this, place a file named masternode.conf in the data directory of your install:
+The multi masternode config allows to control multiple masternodes from a single wallet. The wallet needs to have a valid collaral output of 100000 coins for each masternode. To use this, place a file named masternode.conf in the data directory of your install:
  * Windows: %APPDATA%\Kreds\
  * Mac OS: ~/Library/Application Support/Kreds/
  * Unix/Linux: ~/.kreds/
@@ -15,8 +15,7 @@ mn2 127.0.0.3:3950 93WaAb3htPJEV8E9aQcN23Jt97bPex7YvWfgMDTUdWJvzmrMqey aa9f1034d
 ```
 
 In the example above:
-* the collateral for mn1 output index 0 has amount 200000
-
+* the collateral for mn1 output index 0 has amount 100000
 
 The following new RPC commands are supported:
 * list-conf: shows the parsed masternode.conf
