@@ -1,16 +1,28 @@
-UNIX BUILD NOTES
+UNIX/Linux BUILD NOTES
 ====================
-Some notes on how to build Kreds in Unix. 
+Some notes on how to build Kreds in Unix/Linux. 
 
 To Build
 ---------------------
 
 	./autogen.sh
 	./configure
-
 	make
+	make install # optional
 	
 	strip kredsd kreds-cli kreds-qt
+	
+Example Build Command
+--------------------
+Qt Wallet and Deamon, CLI version build:
+
+    ./autogen.sh && ./configure --with-gui && make && make install
+
+CLI and Deamon Only Buld:
+
+    ./autogen.sh && ./configure --without-gui && make && make install
+
+
 
 This will build kreds-qt as well if the dependencies are met.
 
@@ -54,11 +66,9 @@ Dependency Build Instructions: Ubuntu & Debian
 ----------------------------------------------
 Build requirements:
 
-	sudo apt-get install build-essential
-	sudo apt-get install libtool autotools-dev autoconf automake
-	sudo apt-get install libssl-dev libevent-dev
+	sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libcrypto++-dev libevent-dev git
 
-for Ubuntu 12.04 and later:
+for Ubuntu 12.04 and later or Debian 7 and later libboost-all-dev has to be installed:
 
 	sudo apt-get install libboost-all-dev
 	sudo apt-get install pkg-config 
@@ -107,7 +117,7 @@ To build with Qt 4 you need the following:
 
 For Qt 5 you need the following:
 
-    sudo apt-get install libqt5gui5 libqt5core5 libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev
+sudo apt-get install apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libcrypto++-dev
 
 libqrencode (optional) can be installed with:
 
