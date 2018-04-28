@@ -7,10 +7,22 @@ To Build
 
 	./autogen.sh
 	./configure
-
 	make
+	make install # optional
 	
 	strip kredsd kreds-cli kreds-qt
+	
+Example Build Command
+--------------------
+Qt Wallet and Deamon, CLI version build:
+
+    ./autogen.sh && ./configure --with-gui && make && make install
+
+CLI and Deamon Only Buld:
+
+    ./autogen.sh && ./configure --without-gui && make && make install
+
+
 
 	
 Example Build Command
@@ -66,7 +78,7 @@ Dependency Build Instructions: Ubuntu & Debian
 ----------------------------------------------
 Build requirements:
 
-	sudo apt-get install build-essential libtool autotools-dev autoconf automake libssl-dev libevent-dev
+	sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libcrypto++-dev libevent-dev git
 
 for Ubuntu 12.04 and later or Debian 7 and later libboost-all-dev has to be installed:
 

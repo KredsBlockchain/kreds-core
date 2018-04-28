@@ -17,7 +17,6 @@ mn2 127.0.0.3:3950 93WaAb3htPJEV8E9aQcN23Jt97bPex7YvWfgMDTUdWJvzmrMqey aa9f1034d
 In the example above:
 * the collateral for mn1 output index 0 has amount 100000
 
-
 The following new RPC commands are supported:
 * list-conf: shows the parsed masternode.conf
 * start-alias \<alias\>

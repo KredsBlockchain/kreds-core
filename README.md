@@ -38,7 +38,6 @@ Masternodes will be supported with a collateral requirement of **100000 KREDS**.
 
 Masternode payments do not start until block 15000.
 
-
 **Kreds Rewards Structure**
 				
 Year  |	       Blocks         |	  PoW   |  Masternodes | Total Generated per Block |
@@ -68,7 +67,6 @@ Year  |	       Blocks         |	  PoW   |  Masternodes | Total Generated per Blo
 Block Reward Decrease : 1,5% Every 6 months
 *50% block reward reduction occurred at block 60,000 	
 ------------------------------------------------------------------------------------		
-
 
 #### Segregated Witness
 
