@@ -1351,7 +1351,7 @@ CAmount GetBlockSubsidy(int nBits, int nHeight, const Consensus::Params& consens
 	if (nHeight > 2)
 		nSubsidy = 225 * COIN;
 	//Fork block height for block reward change of 225 to 112.5 (50% reduction)
-	if (nHeight > 60000)
+	if (nHeight > 75000)
 		nSubsidy = 112.5 * COIN;
 	if (nHeight > 131400)
 		nSubsidy = 110.8125 * COIN;
