@@ -7,7 +7,7 @@
 #include <boost/lexical_cast.hpp>
 //CConnman connman1; // def as extern in header of same
 //
-// Bootup the Masternode, look for a 50000 KREDS input and register on the network
+// Bootup the Masternode, look for a 100000 KREDS input and register on the network
 //
 void CActiveMasternode::ManageStatus()
 {
@@ -61,7 +61,7 @@ void CActiveMasternode::ManageStatus()
         }
 
         /**
-         * We try here to establish a connection, 
+         * We try here to establish a connection,
          * Since if we are running masternode, then client will connect to itself
          * to avoid it , we try a connection, and leave
          * This is the expected.
@@ -422,7 +422,7 @@ vector<COutput> CActiveMasternode::SelectCoinsMasternode()
 // when starting a Masternode, this can enable to run as a hot wallet with no funds
 bool CActiveMasternode::EnableHotColdMasterNode(CTxIn& newVin, CService& newService)
 {
-    if (!fMasterNode) 
+    if (!fMasterNode)
         return false;
 
     status = MASTERNODE_REMOTELY_ENABLED;
