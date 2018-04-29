@@ -17,11 +17,11 @@
 #include <vector> //
 #include "masternode.h"
 
-if (pindex->nHeight > 75000) {
+#if (nHeight > 75000)
   static const int MASTERNODEAMOUNT = 100000;
-} else {
+#else
   static const int MASTERNODEAMOUNT = 50000;
-}
+#endif
 
 
 // Responsible for activating the Masternode and pinging the network
