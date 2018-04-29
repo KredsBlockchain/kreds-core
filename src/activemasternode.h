@@ -17,7 +17,12 @@
 #include <vector> //
 #include "masternode.h"
 
-static const int MASTERNODEAMOUNT = 50000;
+#if (nHeight > 75000)
+  static const int MASTERNODEAMOUNT = 100000;
+#else
+  static const int MASTERNODEAMOUNT = 50000;
+#endif
+
 
 // Responsible for activating the Masternode and pinging the network
 class CActiveMasternode
@@ -35,29 +40,29 @@ public:
     std::string notCapableReason;
 
     CActiveMasternode()
-    {        
+    {
         status = MASTERNODE_NOT_PROCESSED;
     }
 
     /// Manage status of main Masternode
-    void ManageStatus(); 
+    void ManageStatus();
 
     /// Ping for main Masternode
-    bool Dseep(std::string& errorMessage); 
+    bool Dseep(std::string& errorMessage);
     /// Ping for any Masternode
-    bool Dseep(CTxIn vin, CService service, CKey key, CPubKey pubKey, std::string &retErrorMessage, bool stop); 
+    bool Dseep(CTxIn vin, CService service, CKey key, CPubKey pubKey, std::string &retErrorMessage, bool stop);
 
     /// Stop main Masternode
-    bool StopMasterNode(std::string& errorMessage); 
+    bool StopMasterNode(std::string& errorMessage);
     /// Stop remote Masternode
-    bool StopMasterNode(std::string strService, std::string strKeyMasternode, std::string& errorMessage); 
+    bool StopMasterNode(std::string strService, std::string strKeyMasternode, std::string& errorMessage);
     /// Stop any Masternode
-    bool StopMasterNode(CTxIn vin, CService service, CKey key, CPubKey pubKey, std::string& errorMessage); 
+    bool StopMasterNode(CTxIn vin, CService service, CKey key, CPubKey pubKey, std::string& errorMessage);
 
     /// Register remote Masternode
-    bool Register(std::string strService, std::string strKey, std::string txHash, std::string strOutputIndex, std::string strDonationAddress, std::string strDonationPercentage, std::string& errorMessage); 
+    bool Register(std::string strService, std::string strKey, std::string txHash, std::string strOutputIndex, std::string strDonationAddress, std::string strDonationPercentage, std::string& errorMessage);
     /// Register any Masternode
-    bool Register(CTxIn vin, CService service, CKey key, CPubKey pubKey, CKey keyMasternode, CPubKey pubKeyMasternode, CScript donationAddress, int donationPercentage, std::string &retErrorMessage); 
+    bool Register(CTxIn vin, CService service, CKey key, CPubKey pubKey, CKey keyMasternode, CPubKey pubKeyMasternode, CScript donationAddress, int donationPercentage, std::string &retErrorMessage);
 
     /// Get 50000 KREDS input that can be used for the Masternode
     bool GetMasterNodeVin(CTxIn& vin, CPubKey& pubkey, CKey& secretKey);
