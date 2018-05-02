@@ -24,6 +24,10 @@ bool CMasternodeConfig::read(std::string& strErr) {
             continue;
         }
 
+        if (line[0] == '#') {
+            continue;
+        }
+
         std::istringstream iss(line);
         std::string alias, ip, privKey, txHash, outputIndex, donation, donationAddress, donationPercent;
         if (!(iss >> alias >> ip >> privKey >> txHash >> outputIndex >> donation)) {
