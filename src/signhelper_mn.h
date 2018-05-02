@@ -6,7 +6,7 @@ class CMNSignHelper{
 
     public:
         CScript collateralPubKey;
-        /// Is the inputs associated with this public key? (and there is 50000 KREDS - checking if valid masternode)
+        /// Is the inputs associated with this public key? (and there is 100000 KREDS - checking if valid masternode)
 
 
         bool IsVinAssociatedWithPubkey(CTxIn& vin, CPubKey& pubkey)
@@ -24,7 +24,7 @@ class CMNSignHelper{
                           }
                      }
                 }
-            } 
+            }
 
             return false;
         }
@@ -98,10 +98,10 @@ class CMNSignHelper{
         }
 
 
-        void InitCollateralAddress() 
+        void InitCollateralAddress()
         {
             std::string strAddress = "";
-            strAddress = "";        
+            strAddress = "";
             SetCollateralAddress(strAddress);
         }
 };
