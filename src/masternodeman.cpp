@@ -865,15 +865,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, const std::string& strCommand,
 
         if (fDebug) LogPrintf("dseep - Couldn't find Masternode entry %s\n", vin.ToString().c_str());
 
-        std::map<COutPoint, int64_t>::iterator i = mWeAskedForMasternodeListEntry.find(vin.prevout);
-        if (i != mWeAskedForMasternodeListEntry.end())
-        {
-            int64_t t = (*i).second;
-            if (GetTime() < t) return; // we've asked recently
-        }
-
         // ask for the dsee info once from the node that sent dseep
-
         LogPrintf("dseep - Asking source node for missing entry %s\n", vin.ToString().c_str());
         //pfrom->PushMessage("dseg", vin);
         connman.PushMessage(pfrom, CNetMsgMaker(PROTOCOL_VERSION).Make(SERIALIZE_TRANSACTION_NO_WITNESS, "dseg", vin));
