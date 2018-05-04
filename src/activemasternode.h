@@ -17,7 +17,7 @@
 #include <vector> //
 #include "masternode.h"
 
-#if (nHeight > 75000)
+#if (nHeight > 60000)
   static const int MASTERNODEAMOUNT = 100000;
 #else
   static const int MASTERNODEAMOUNT = 50000;
