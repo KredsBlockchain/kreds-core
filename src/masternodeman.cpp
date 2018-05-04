@@ -836,7 +836,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, const std::string& strCommand,
              if (fDebug) LogPrintf("dseep - Found corresponding mn for vin: %s\n", vin.ToString().c_str());
             
             // take this only if it's newer
-            if (pmn->lastDseep > MASTERNODE_MIN_MNP_SECONDS) {
+            if (pmn->lastDseep > MASTERNODE_MIN_DSEE_SECONDS) {
                 std::string strMessage = pmn->addr.ToString() + boost::lexical_cast<std::string>(sigTime) + boost::lexical_cast<std::string>(stop);
                 std::string errorMessage = "";
                 if (!darkSendSigner.VerifyMessage(pmn->pubkey2, vchSig, strMessage, errorMessage)) {
