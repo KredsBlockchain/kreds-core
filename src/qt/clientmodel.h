@@ -85,10 +85,10 @@ public:
 private:
     OptionsModel *optionsModel;
     PeerTableModel *peerTableModel;
-    QString cachedMasternodeCountString;
     BanTableModel *banTableModel;
+	QString cachedMasternodeCountString;
     QTimer *pollTimer;
-    QTimer* pollMnTimer;
+	QTimer* pollMnTimer;
     void subscribeToCoreSignals();
     void unsubscribeFromCoreSignals();
 
