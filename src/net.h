@@ -209,7 +209,7 @@ public:
     void SetServices(const CService &addr, ServiceFlags nServices);
     void MarkAddressGood(const CAddress& addr);
     void AddNewAddress(const CAddress& addr, const CAddress& addrFrom, int64_t nTimePenalty = 0);
-    void AddNewAddress(CAddress& addr, const CAddress& addrFrom, int64_t nTimePenalty = 0);
+	void AddNewAddress(CAddress& addr, const CAddress& addrFrom, int64_t nTimePenalty = 0);
     void AddNewAddresses(const std::vector<CAddress>& vAddr, const CAddress& addrFrom, int64_t nTimePenalty = 0);
     std::vector<CAddress> GetAddresses();
     void AddressCurrentlyConnected(const CService& addr);
@@ -348,9 +348,9 @@ private:
     uint64_t nMaxOutboundCycleStartTime;
     uint64_t nMaxOutboundLimit;
     uint64_t nMaxOutboundTimeframe;
-
-    /** TODO-- */
-    std::vector<std::string> vecRequestsFulfilled; //keep track of what client has asked for
+	
+	/**TODO-- */
+	std::vector<std::string> vecRequestsFulfilled; //keep track of what client has asked for
     
     // Whitelisted ranges. Any node connecting from these is automatically
     // whitelisted (as well as those connecting to whitelisted binds).
@@ -615,7 +615,7 @@ public:
     // b) the peer may tell us in its version message that we should not relay tx invs
     //    unless it loads a bloom filter.
     bool fRelayTxes; //protected by cs_filter
-    bool fDarkSendMaster; //TODO--
+	bool fDarkSendMaster; //TODO--
     bool fSentAddr;
     CSemaphoreGrant grantOutbound;
     CCriticalSection cs_filter;
@@ -630,7 +630,8 @@ protected:
 
     mapMsgCmdSize mapSendBytesPerMsgCmd;
     mapMsgCmdSize mapRecvBytesPerMsgCmd;
-    std::vector<std::string> vecRequestsFulfilled;
+	
+	std::vector<std::string> vecRequestsFulfilled;
 
 public:
     uint256 hashContinue;
@@ -813,9 +814,8 @@ public:
     {
         return nLocalServices;
     }
-
-    //TODO--
-    bool HasFulfilledRequest(std::string strRequest)
+	//TODO--
+	bool HasFulfilledRequest(std::string strRequest)
     {
         BOOST_FOREACH(std::string& type, vecRequestsFulfilled)
         {
@@ -842,7 +842,6 @@ public:
         vecRequestsFulfilled.push_back(strRequest);
     }
     //TODO-- ends
-
     std::string GetAddrName() const;
     //! Sets the addrName only if it was not previously set
     void MaybeSetAddrName(const std::string& addrNameIn);

@@ -78,8 +78,8 @@ Build Instructions: Ubuntu & Debian
 	------------
 	mkdir .kreds
 	cd .kreds
-	wget https://github.com/KredsBlockchain/kreds-core/releases/download/v1.0.0.4/kreds-linux64-v1.0.0.4.tar.xz
-	tar xf kreds-linux64-v1.0.0.4.tar.xz
+	wget https://github.com/KredsBlockchain/kreds-core/releases/download/v1.0.0.5/kreds-linux64-v1.0.0.5.tar.xz
+	tar xf kreds-linux64-v1.0.0.5.tar.xz
 	
 	$ sudo cp kredsd /usr/bin
 	$ sudo chmod 775 /usr/bin/kredsd
