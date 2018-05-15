@@ -148,7 +148,7 @@ bool LookupHost(const char *pszName, CNetAddr& addr, bool fAllowLookup)
 {
     std::vector<CNetAddr> vIP;
     LookupHost(pszName, vIP, 1, fAllowLookup);
-    if (vIP.empty())
+    if(vIP.empty())
         return false;
     addr = vIP.front();
     return true;
@@ -187,7 +187,7 @@ CService LookupNumeric(const char *pszName, int portDefault)
     CService addr;
     // "1.2:345" will fail to resolve the ip, but will still set the port.
     // If the ip fails to resolve, re-init the result.
-    if (!Lookup(pszName, addr, portDefault, false))
+    if(!Lookup(pszName, addr, portDefault, false))
         addr = CService();
     return addr;
 }
@@ -516,7 +516,7 @@ bool SetNameProxy(const proxyType &addrProxy) {
 
 bool GetNameProxy(proxyType &nameProxyOut) {
     LOCK(cs_proxyInfos);
-    if (!nameProxy.IsValid())
+    if(!nameProxy.IsValid())
         return false;
     nameProxyOut = nameProxy;
     return true;
@@ -643,7 +643,7 @@ std::string NetworkErrorString(int err)
 {
     char buf[256];
     buf[0] = 0;
-    if (FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_MAX_WIDTH_MASK,
+    if(FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_MAX_WIDTH_MASK,
             NULL, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
             buf, sizeof(buf), NULL))
     {

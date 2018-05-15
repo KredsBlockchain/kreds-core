@@ -61,55 +61,60 @@ void ProcessSpork(CNode* pfrom, const string& strCommand, CDataStream& vRecv, CC
 
 class CSporkMessage
 {
-    public:
-        std::vector<unsigned char> vchSig;
-        int nSporkID;
-        int64_t nValue;
-        int64_t nTimeSigned;
+public:
+    std::vector<unsigned char> vchSig;
+    int nSporkID;
+    int64_t nValue;
+    int64_t nTimeSigned;
     
 
-         uint256 GetHash()
-         { 
-             return Hash(BEGIN(nSporkID), END(nTimeSigned));
-         }
+     uint256 GetHash()
+	{ 
+    uint256 n;
 
+		n = Hash(BEGIN(nSporkID), END(nTimeSigned));
+		return n;
+      
+    }
 
-        ADD_SERIALIZE_METHODS;
-        template <typename Stream, typename Operation>
-
-        inline void SerializationOp(Stream& s, Operation ser_action)
-        {
-            READWRITE(nSporkID);
-            READWRITE(nValue);
-            READWRITE(nTimeSigned);
-            READWRITE(vchSig);
-        }
+    ADD_SERIALIZE_METHODS;
+    template <typename Stream, typename Operation>
+    inline void SerializationOp(Stream& s, Operation ser_action)
+	{
+    READWRITE(nSporkID);
+    READWRITE(nValue);
+    READWRITE(nTimeSigned);
+    READWRITE(vchSig);
+    }
 };
 
 
 class CSporkManager
 {
-    private:
-        std::vector<unsigned char> vchSig;
-        std::string strMasterPrivKey;
-        std::string strTestPubKey;
-        std::string strMainPubKey;
+private:
+    std::vector<unsigned char> vchSig;
 
-    public:
-        CSporkManager() 
-        {
-            strMainPubKey = "04521CAE97FEE1CA1F67B4B6D5E4323125D63DBA5291CF2609F71234ED86355A109140B3316366CAD47DCD2D0C04326A3233AC7797231F0AF88C1FE6FE94B7E37C";
-            strTestPubKey = "04CBC82D432A42A05F9474A5554413A6166767C928DE669C40144DC585FB85F15E28035EADE398A6B8E38C24A001EAB50023124C4D8328C99EC2FDE47ED54B17BF";
-        }
+    std::string strMasterPrivKey;
+    std::string strTestPubKey;
+    std::string strMainPubKey;
 
-        std::string GetSporkNameByID(int id);
-        int GetSporkIDByName(std::string strName);
-        bool UpdateSpork(int nSporkID, int64_t nValue);
-        bool SetPrivKey(std::string strPrivKey);
-        bool CheckSignature(CSporkMessage& spork);
-        bool Sign(CSporkMessage& spork);
-        void Relay(CSporkMessage& msg, CConnman& connman);
-        void RelayUpdateSpork(CSporkMessage& msg);
+public:
+
+    CSporkManager() {
+
+        strMainPubKey = "04521CAE97FEE1CA1F67B4B6D5E4323125D63DBA5291CF2609F71234ED86355A109140B3316366CAD47DCD2D0C04326A3233AC7797231F0AF88C1FE6FE94B7E37C";
+        strTestPubKey = "04CBC82D432A42A05F9474A5554413A6166767C928DE669C40144DC585FB85F15E28035EADE398A6B8E38C24A001EAB50023124C4D8328C99EC2FDE47ED54B17BF";
+    }
+
+    std::string GetSporkNameByID(int id);
+    int GetSporkIDByName(std::string strName);
+    bool UpdateSpork(int nSporkID, int64_t nValue);
+    bool SetPrivKey(std::string strPrivKey);
+    bool CheckSignature(CSporkMessage& spork);
+    bool Sign(CSporkMessage& spork);
+    void Relay(CSporkMessage& msg, CConnman& connman);
+	void RelayUpdateSpork(CSporkMessage& msg);
+
 };
 
 #endif

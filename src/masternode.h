@@ -94,7 +94,6 @@ public:
     int64_t lastVote;
     int nScanningErrorCount;
     int nLastScanningErrorBlockHeight;
-    int64_t nLastDseep;
 
     CMasternode();
     CMasternode(const CMasternode& other);
@@ -128,7 +127,6 @@ public:
         swap(first.lastVote, second.lastVote);
         swap(first.nScanningErrorCount, second.nScanningErrorCount);
         swap(first.nLastScanningErrorBlockHeight, second.nLastScanningErrorBlockHeight);
-        swap(first.nLastDseep, second.nLastDseep);
     }
 
     CMasternode& operator=(CMasternode from)
@@ -150,7 +148,7 @@ public:
     ADD_SERIALIZE_METHODS;
     template <typename Stream, typename Operation>
     inline void SerializationOp(Stream& s, Operation ser_action)
-    {
+	{
         // serialized format:
         // * version byte (currently 0)
         // * all fields (?)
@@ -179,7 +177,6 @@ public:
                 READWRITE(lastVote);
                 READWRITE(nScanningErrorCount);
                 READWRITE(nLastScanningErrorBlockHeight);
-                READWRITE(nLastDseep);
         }
     }
 
@@ -247,7 +244,7 @@ public:
                         if(nScanningErrorCount >= 4)
                         {
                         nScanningErrorCount = 0;
-                        LogPrintf("S-Reset Bad Masternodescore \n"); // Kredsdev Set this for Debug
+                        LogPrintf("S-Reset Bad Masternodescore \n"); //	Kredsdev Set this for Debug
                         }
                         
             if(nScanningErrorCount > MASTERNODE_SCANNING_ERROR_THESHOLD*2) nScanningErrorCount = MASTERNODE_SCANNING_ERROR_THESHOLD*2;
@@ -280,35 +277,33 @@ public:
     CScript payee;
     std::vector<unsigned char> vchSig;
     uint64_t score;
-
-
-    CMasternodePaymentWinner() 
-    {
+	
+		
+    CMasternodePaymentWinner() {
         nBlockHeight = 0;
         score = 0;
         vin = CTxIn();
         payee = CScript();
     }
-
+	
 
 
     uint256 GetHash()
-    { 
-        arith_uint256 n2, n3; 
+	{ 
+		arith_uint256 n2, n3; 
+	
+		int nBlockTime = chainActive.Tip()->GetBlockTime();
+	    
+		n2 = UintToArith256(Hash(BEGIN(nBlockHeight), END(nBlockHeight)));
+		n3 = UintToArith256(vin.prevout.hash) > n2 ? UintToArith256(vin.prevout.hash) - n2 : n2 - UintToArith256(vin.prevout.hash);
 
-        // Lobos - Unused variable warning
-        // int nBlockTime = chainActive.Tip()->GetBlockTime();
-
-        n2 = UintToArith256(Hash(BEGIN(nBlockHeight), END(nBlockHeight)));
-        n3 = UintToArith256(vin.prevout.hash) > n2 ? UintToArith256(vin.prevout.hash) - n2 : n2 - UintToArith256(vin.prevout.hash);
-
-        return ArithToUint256(n3);
+		return ArithToUint256(n3);
     }
 
     ADD_SERIALIZE_METHODS;
     template <typename Stream, typename Operation>
     inline void SerializationOp(Stream& s, Operation ser_action)
-    {
+	{
         READWRITE(nBlockHeight);
         READWRITE(*(CScriptBase*)(&payee));//--todo test
         READWRITE(vin);

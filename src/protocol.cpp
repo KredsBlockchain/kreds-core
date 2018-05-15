@@ -97,8 +97,8 @@ const static std::string allNetMessageTypes[] = {
     NetMsgType::CMPCTBLOCK,
     NetMsgType::GETBLOCKTXN,
     NetMsgType::BLOCKTXN,
-    NetMsgType::MNWINNER,
-    NetMsgType::SPORK,
+	NetMsgType::MNWINNER,
+	NetMsgType::SPORK,
 };
 const static std::vector<std::string> allNetMessageTypesVec(allNetMessageTypes, allNetMessageTypes+ARRAYLEN(allNetMessageTypes));
 
@@ -198,13 +198,14 @@ std::string CInv::GetCommand() const
     int masked = type & MSG_TYPE_MASK;
     switch (masked)
     {
-        case MSG_TX:                return cmd.append(NetMsgType::TX);
-        case MSG_BLOCK:             return cmd.append(NetMsgType::BLOCK);
-        case MSG_FILTERED_BLOCK:    return cmd.append(NetMsgType::MERKLEBLOCK);
-        case MSG_CMPCT_BLOCK:       return cmd.append(NetMsgType::CMPCTBLOCK);
-        case MSG_MASTERNODE_WINNER: return cmd.append(NetMsgType::MNWINNER);
-        case MSG_SPORK:             return cmd.append(NetMsgType::SPORK);
-        default:                    throw std::out_of_range(strprintf("CInv::GetCommand(): type=%d unknown type", type));
+    case MSG_TX:             return cmd.append(NetMsgType::TX);
+    case MSG_BLOCK:          return cmd.append(NetMsgType::BLOCK);
+    case MSG_FILTERED_BLOCK: return cmd.append(NetMsgType::MERKLEBLOCK);
+    case MSG_CMPCT_BLOCK:    return cmd.append(NetMsgType::CMPCTBLOCK);
+	case MSG_MASTERNODE_WINNER: return cmd.append(NetMsgType::MNWINNER);
+	case MSG_SPORK: return cmd.append(NetMsgType::SPORK);
+    default:
+        throw std::out_of_range(strprintf("CInv::GetCommand(): type=%d unknown type", type));
     }
 }
 
