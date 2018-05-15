@@ -1352,7 +1352,7 @@ CAmount GetBlockSubsidy(int nBits, int nHeight, const Consensus::Params& consens
         nSubsidy = 600000000 * COIN;
     if (nHeight > 2)
         nSubsidy = 225 * COIN;
-    if (nHeight > 60450)
+    if (nHeight > 65000)
         nSubsidy = 112.5 * COIN;
     if (nHeight > 131400)
         nSubsidy = 110.8125 * COIN;
@@ -2117,7 +2117,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     
     //Ensure Masternode Payment (EMP) enforced from block 30k onward
     //[DalmationCadet] Add a gap between MN collateral change where MN payments aren't required due to missing/small amounts of nodes (1 Day of Blocks)
-    if(pindex->nHeight >= chainparams.GetConsensus().MasternodePaymentStartHeight + 15000 && (pindex->nHeight < 60450 || pindex->nHeight > 61170))
+    if(pindex->nHeight >= chainparams.GetConsensus().MasternodePaymentStartHeight + 15000 && (pindex->nHeight < 65000 || pindex->nHeight > 66220))
     {
         bool missingMNPayment = true;
         bool incorrectMNPayment = false;
@@ -2165,7 +2165,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
 	            missingMNPayment = true;
 	        }
 	        /*else {
-                if (pindex->nHeight > 60450) {
+                if (pindex->nHeight > 65000) {
 	                   unsigned int blockRewardTargetCount = 0;
 	                   BOOST_FOREACH(const CTxOut& output, tx.vout) {
 	                   if (output.scriptPubKey != CScript()) {

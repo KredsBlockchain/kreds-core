@@ -445,7 +445,7 @@ int getMasternodeCollateral()
     CBlockIndex* pindex   = chainActive.Tip();
     int          mnAmount = 50000;
 
-    if (pindex->nHeight >= 60450) {
+    if (pindex->nHeight >= 65000) {
         mnAmount = 100000;
     }
 
