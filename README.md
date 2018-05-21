@@ -65,7 +65,7 @@ Year  |	       Blocks         |	  PoW   |  Masternodes | Total Generated per Blo
 2027  |	2,496,601 - 2,628,000 |	 42.85  |    42.85     |	    85.70              |
 ------------------------------------------------------------------------------------				
 Block Reward Decrease : 1,5% Every 6 months
-*50% block reward reduction occurred at block 60,000 	
+*50% block reward reduction occurred at block 65,000 	
 ------------------------------------------------------------------------------------		
 
 #### Segregated Witness
