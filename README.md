@@ -9,7 +9,7 @@ Introducing a new decentralised, open source, community driven digital currency.
 __________________________________________________________________________
 ### Specifications
 
-###### Version: 1.0.0.5
+###### Version: 1.0.0.6
 ###### Proof-of-Work Algorithm: Lyra2REv2
 ###### Block Max Size: 4 MB
 ###### Max Block Size Serialized Size: 8 MB
