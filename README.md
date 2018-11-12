@@ -181,3 +181,28 @@ Always verify the signatures and checksums.
 
 
 __________________________________________________________________________
+
+
+### Bootstrapping
+
+Download the bootstrap.dat file here: https://goo.gl/V5YK7U
+
+
+1) Make a backup of the wallet.dat file, store it somewhere safe;
+
+Locate your application support(In these locations):
+
+Windows:
+Code:%AppData%\Roaming\kreds 
+
+Mac:
+Code: ~/Library/Application Support/kreds
+
+Linux:
+Code: ~/.kreds
+
+2) Delete all the other files except wallet.dat and keep any kreds.conf files you may have created;
+3) Drop the bootstrap.dat file into the kreds folder;
+4) Start the wallet and wait for it to re-sync, which might take a couple of minutes.
+
+Compare you results with the block explorer https://www.kredsexplorer.com as that is correct to all the nodes.
